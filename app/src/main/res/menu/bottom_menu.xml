@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:title="Anasayfa"
+        android:icon="@drawable/baseline_home_24"
+        ></item>
+
+    <item
+        android:id="@+id/favs"
+        android:title="Favoriler"
+        android:icon="@drawable/baseline_heart_broken_24"
+        ></item>
+
+    <item
+        android:id="@+id/addSpecifications"
+        android:title="Tarif Ekle"
+        android:icon="@drawable/baseline_food_bank_24"
+        ></item>
+
+    <item
+        android:id="@+id/specifications"
+        android:title="Tarifler"
+        android:icon="@drawable/baseline_whatshot_24"
+        ></item>
+
+    <item
+        android:id="@+id/profile"
+        android:title="Profil"
+        android:icon="@drawable/baseline_person_24"
+        ></item>
+
+</menu>
