@@ -38,30 +38,28 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@" <!-- Günün menüsü resmi -->
-                android="Menü Resmi" />
+                android:src="@drawable/baseline_food_bank_24" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Günün Menüsü" <!-- Menü adı -->
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:onClick="menuDetailPage" <!-- Tıklama işlemi -->
-            android:clickable="true"
-            android:background="?android:attr/selectableItemBackground" <!-- Tıklanabilirlik -->
-            android:padding="8dp"
-            android:gravity="center" />
+                android:text="Günün Menüsü"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:onClick="menuDetailPage"
+                android:clickable="true"
+                android:padding="8dp"
+                android:gravity="center" />
         </LinearLayout>
 
         <!-- Yemeğin Adı -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yemeğin Adı" <!-- Yemeğin adı -->
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:gravity="center" />
+            android:text="Yemeğin Adı"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:gravity="center" />
     </LinearLayout>
 
     <!-- Arama Görünümü -->
