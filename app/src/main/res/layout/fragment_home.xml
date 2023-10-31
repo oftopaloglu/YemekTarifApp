@@ -1,18 +1,90 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lavender"
+    android:background="#F8F5F5"
     tools:context=".HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Anasayfa Metni -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Anasayfa"
+        android:layout_height="94dp"
+        android:layout_gravity="top|center_horizontal"
         android:gravity="center"
+        android:text="Yemek Tarifim"
+        android:textColor="@color/black"
         android:textSize="30sp"
-        android:textColor="@color/white" />
+        android:background="#F86060"
+        android:textStyle="bold|italic"
+        android:fontFamily="sans-serif" />
 
+    <!-- Menü Alanı -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="100dp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="300dp">
+
+        <!-- Günün Menüsü -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@" <!-- Günün menüsü resmi -->
+                android="Menü Resmi" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Günün Menüsü" <!-- Menü adı -->
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:onClick="menuDetailPage" <!-- Tıklama işlemi -->
+            android:clickable="true"
+            android:background="?android:attr/selectableItemBackground" <!-- Tıklanabilirlik -->
+            android:padding="8dp"
+            android:gravity="center" />
+        </LinearLayout>
+
+        <!-- Yemeğin Adı -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yemeğin Adı" <!-- Yemeğin adı -->
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:gravity="center" />
+    </LinearLayout>
+
+    <!-- Arama Görünümü -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="120dp"
+        android:gravity="center_horizontal|bottom"
+        android:padding="16dp">
+
+        <EditText
+            android:layout_width="217dp"
+            android:layout_height="45dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:layout_marginRight="25dp"
+            android:hint="Tarif Ara..." />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#F86060"
+            android:text="Ara" />
+    </LinearLayout>
 </FrameLayout>
