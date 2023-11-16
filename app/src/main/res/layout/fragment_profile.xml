@@ -20,14 +20,26 @@
 
          <ImageView
              android:id="@+id/background"
-             android:layout_width="431dp"
+             android:layout_width="match_parent"
              android:layout_height="128dp"
              android:scaleType="fitXY"
              android:src="@drawable/arka_plan"
-             app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintStart_toStartOf="parent"
              app:layout_constraintTop_toTopOf="parent"
-             />
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintEnd_toEndOf="parent"/>
+
+         <TextView
+             android:id="@+id/textView"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="Favori Tarifler"
+             android:textStyle="bold"
+             android:textSize="40dp"
+             android:textColor="#FFA500"
+             app:layout_constraintBottom_toBottomOf="@+id/background"
+             app:layout_constraintEnd_toEndOf="@+id/background"
+             app:layout_constraintStart_toStartOf="@+id/background"
+             app:layout_constraintTop_toTopOf="@+id/background" />
 
          <ImageView
              android:id="@+id/profilePhoto"
@@ -57,7 +69,7 @@
              android:layout_height="wrap_content"
              android:text="Oguzhan.celik92@erzurum.edu.tr"
              android:textSize="20sp"
-             
+
 
              android:textStyle="italic"
              app:layout_constraintEnd_toEndOf="@+id/nickName"
