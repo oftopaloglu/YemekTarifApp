@@ -1,23 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F3EDED"
-    tools:context=".LoginPage">
+    tools:context=".ProfileFragment"
+    android:background="#ececec">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/googleLoginButton"
-        android:layout_marginTop="200dp"
-        android:layout_gravity="center"
-        android:layout_width="170dp"
-        android:backgroundTint="#EA411D"
-        android:layout_height="100dp"
-        android:textSize="55px"
-        android:text="Sign in with Google" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="728dp">
 
+                <ImageView
+                    android:id="@+id/background"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/arka_plan"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+                <TextView
+                    android:id="@+id/pagename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profil"
+                    android:textColor="#FFFFFF"
+                    android:textSize="40dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/background"
+                    app:layout_constraintEnd_toEndOf="@+id/background"
+                    app:layout_constraintStart_toStartOf="@+id/background"
+                    app:layout_constraintTop_toTopOf="@+id/background" />
+
+                <EditText
+                    android:id="@+id/nickname"
+                    android:layout_width="255dp"
+                    android:layout_height="39dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/btn_background_1"
+                    android:paddingStart="5dp"
+                    android:textSize="20dp"
+                    android:textStyle="italic"
+                    android:hint="Kullanıcı Adı"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/background"
+                    />
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="255dp"
+                    android:layout_height="39dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/btn_background_1"
+                    android:paddingStart="5dp"
+                    android:hint="Passaword"
+                    android:textSize="20dp"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/nickname"
+                    tools:ignore="MissingConstraints" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/accountSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/btn_background_1"
+                    android:drawableStart="@drawable/googleicon"
+                    android:drawablePadding="20dp"
+                    android:paddingStart="20dp"
+                    android:text="Google ile bağlan"
+                    android:textAlignment="viewStart"
+                    android:textSize="18sp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/password" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/favFoods"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/btn_background_1"
+                    android:drawableStart="@drawable/twittericon"
+                    android:drawablePadding="30dp"
+                    android:layout_marginTop="20dp"
+                    android:paddingStart="25dp"
+                    android:text="Twitter ile Bağlan"
+                    android:textAlignment="viewStart"
+                    android:textSize="18sp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/accountSettings" />
+
+                <androidx.appcompat.widget.AppCompatButton
+
+                    android:id="@+id/recipes"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@drawable/btn_background_1"
+                    android:layout_marginTop="20dp"
+                    android:drawableStart="@drawable/facebookicon"
+                    android:drawablePadding="15dp"
+                    android:paddingStart="10dp"
+                    android:text="Facebook İle Bağlan"
+                    android:textAlignment="viewStart"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/favFoods" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
