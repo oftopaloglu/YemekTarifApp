@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.grup4.yemektarifapp.R;
+
 public class LoginPage extends AppCompatActivity {
 
     @Override
