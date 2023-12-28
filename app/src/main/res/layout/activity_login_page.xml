@@ -44,7 +44,7 @@
                     app:layout_constraintTop_toTopOf="@+id/background" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/googleLogin"
+                    android:id="@+id/btnGoogleAuth"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginStart="30dp"
