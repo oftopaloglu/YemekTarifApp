@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "658751455493",
+    "project_id": "yemektarifapp",
+    "storage_bucket": "yemektarifapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658751455493:android:a68a336d3ac1f5708e376c",
+        "android_client_info": {
+          "package_name": "com.grup4.yemektarifapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2ow67wC2LsnKhecCiNblRoidiZzzGxdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
