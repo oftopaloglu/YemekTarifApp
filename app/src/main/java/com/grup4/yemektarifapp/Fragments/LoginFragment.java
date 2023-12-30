@@ -31,7 +31,7 @@ import com.grup4.yemektarifapp.R;
 import java.util.HashMap;
 
 
-public class ProfileFragment extends Fragment {
+public class LoginFragment extends Fragment {
 
     Button googleAuth;
     FirebaseAuth auth;
@@ -42,7 +42,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -71,6 +71,7 @@ public class ProfileFragment extends Fragment {
                 System.out.println("3");
             }
         });
+
     }
 
     private void googleSignIn() {

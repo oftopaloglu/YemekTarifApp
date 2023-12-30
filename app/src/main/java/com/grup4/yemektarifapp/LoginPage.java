@@ -23,10 +23,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
-import com.grup4.yemektarifapp.R;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 public class LoginPage extends AppCompatActivity {
 
@@ -38,7 +36,7 @@ public class LoginPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_page);
+        setContentView(R.layout.fragment_login);
 
         googleAuth = findViewById(R.id.btnGoogleAuth);
 

@@ -6,10 +6,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.grup4.yemektarifapp.Fragments.HomeFragment;
-import com.grup4.yemektarifapp.Fragments.ProfileFragment;
+import com.grup4.yemektarifapp.Fragments.LoginFragment;
 import com.grup4.yemektarifapp.Fragments.SpecificationsFragment;
-import com.grup4.yemektarifapp.Fragments.addSpecificationsFragment;
-import com.grup4.yemektarifapp.Fragments.favsFragment;
+import com.grup4.yemektarifapp.Fragments.AddSpecificationsFragment;
+import com.grup4.yemektarifapp.Fragments.FavoritesFragment;
 import com.grup4.yemektarifapp.databinding.ActivityMainBinding;
 import android.os.Bundle;
 
@@ -28,13 +28,13 @@ public class MainActivity extends AppCompatActivity {
             if (id == R.id.home) {
                 replaceFragment(new HomeFragment());
             } else if (id == R.id.favs) {
-                replaceFragment(new favsFragment());
+                replaceFragment(new FavoritesFragment());
             } else if (id == R.id.addSpecifications) {
-                replaceFragment(new addSpecificationsFragment());
+                replaceFragment(new AddSpecificationsFragment());
             } else if (id == R.id.specifications) {
                 replaceFragment(new SpecificationsFragment());
             } else if (id == R.id.profile) {
-                replaceFragment(new ProfileFragment());
+                replaceFragment(new LoginFragment());
             }
             return true;
         });
