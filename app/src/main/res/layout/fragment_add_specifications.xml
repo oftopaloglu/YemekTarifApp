@@ -60,7 +60,7 @@
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/addphoto"
                             android:layout_width="340dp"
-                            android:layout_height="160dp"
+                            android:layout_height="100dp"
                             android:layout_marginStart="32dp"
                             android:layout_marginTop="35dp"
                             android:layout_marginEnd="32dp"
@@ -74,12 +74,24 @@
                             android:textSize="25sp"
                             android:textStyle="bold" />
 
+                        <EditText
+                            android:id="@+id/editYemekAdi"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="32dp"
+                            android:hint="Yemek Adı"
+                            app:layout_constraintTop_toBottomOf="@+id/background"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnMalzemeler"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_marginStart="32dp"
-                            android:layout_marginTop="40dp"
+                            android:layout_marginTop="15dp"
                             android:layout_marginEnd="32dp"
                             android:layout_marginBottom="10dp"
                             android:background="@drawable/btn_background_1"
@@ -90,6 +102,7 @@
                             android:textAlignment="viewStart"
                             android:textSize="18sp"
                             android:textStyle="bold" />
+
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnYapilis"
