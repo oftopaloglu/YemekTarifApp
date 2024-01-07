@@ -84,7 +84,9 @@
                             android:hint="Yemek Adı"
                             app:layout_constraintTop_toBottomOf="@+id/background"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"/>
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:inputType="text"
+                            android:imeOptions="actionDone"/>
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/btnMalzemeler"

@@ -22,6 +22,8 @@ import com.grup4.yemektarifapp.databinding.DialogAddCookingStepBinding;
 import com.grup4.yemektarifapp.databinding.DialogAddIngredientBinding;
 
 import java.util.ArrayList;
+import android.view.inputmethod.EditorInfo;
+
 
 public class AddSpecificationsFragment extends Fragment {
 
@@ -47,6 +49,18 @@ public class AddSpecificationsFragment extends Fragment {
         binding.btnMalzemeler.setOnClickListener(v -> showAddIngredientDialog());
 
         binding.btnYapilis.setOnClickListener(v -> showAddCookingStepsDialog());
+        binding.editYemekAdi.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                // Enter tuşuna basıldığında buraya gelir
+
+                foodRecipe.setName(binding.editYemekAdi.getText().toString().trim());
+                System.out.println(" ife girdi yemek adı  " + foodRecipe.getName());
+                return true; // Olayın tüketildiğini belirt
+            }
+            return false; // Olayın işlenmediğini belirt
+        });
+
+
 
         return view;
     }
@@ -55,23 +69,15 @@ public class AddSpecificationsFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Malzeme Ekle");
 
-        final DialogAddIngredientBinding ingredientBinding = DialogAddIngredientBinding.inflate(getLayoutInflater());
+        DialogAddIngredientBinding ingredientBinding = DialogAddIngredientBinding.inflate(getLayoutInflater());
         builder.setView(ingredientBinding.getRoot());
 
-        final EditText ingredientEditText = ingredientBinding.edtIngredient;
-        final ListView ingredientsListView = ingredientBinding.ingredientsListView;
-
+        EditText ingredientEditText = ingredientBinding.edtIngredient;
+        ListView ingredientsListView = ingredientBinding.ingredientsListView;
         ingredientsListView.setAdapter(ingredientsAdapter);
 
         builder.setPositiveButton("Ekle", (dialog, which) -> {
-            String newIngredient = ingredientEditText.getText().toString().trim();
-            if (!newIngredient.isEmpty()) {
-                ingredientsList.add(newIngredient);
-                ingredientsAdapter.notifyDataSetChanged();
-
-                // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
-                foodRecipe.addMaterial(newIngredient);
-            }
+            addIngredientToList(ingredientEditText.getText().toString().trim());
         });
 
         builder.setNegativeButton("İptal", (dialog, which) -> dialog.cancel());
@@ -80,22 +86,29 @@ public class AddSpecificationsFragment extends Fragment {
         alertDialog.show();
 
         ingredientEditText.setOnKeyListener((v, keyCode, event) -> {
-            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                String newIngredient = ingredientEditText.getText().toString().trim();
-                if (!newIngredient.isEmpty()) {
-                    ingredientsList.add(newIngredient);
-                    ingredientsAdapter.notifyDataSetChanged();
-                    ingredientEditText.setText("");
-
-                    // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
-                    foodRecipe.addMaterial(newIngredient);
-                }
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                addIngredientToList(ingredientEditText.getText().toString().trim());
                 return true;
             }
             return false;
         });
     }
+
+    private void addIngredientToList(String newIngredient) {
+        if (!newIngredient.isEmpty()) {
+            ingredientsList.add(newIngredient);
+            ingredientsAdapter.notifyDataSetChanged();
+
+            // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
+            foodRecipe.addMaterial(newIngredient);
+
+            // Eklendikten sonra listenin durumunu ekrana yazdır
+            System.out.println("burada listenin durumu ekrana yazdırılıyor " + foodRecipe.getMaterial());
+        }
+    }
+
+
+    // Diğer metotlar
 
     private void showAddCookingStepsDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -117,8 +130,13 @@ public class AddSpecificationsFragment extends Fragment {
 
                 // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
                 foodRecipe.addMaterial(newCookingStep);
-                System.out.println("burada listenin durumu ekrana yazdırılıyor "+  foodRecipe.getMaterial());
+
+                // Eklendikten sonra listenin durumunu ekrana yazdır
+                // girilen yemek adını da yazdır
+
+                System.out.println("burada listenin durumu ekrana yazdırılıyor " + foodRecipe.getMaterial());
             }
+            System.out.printf("yemek adı " , foodRecipe.getName());
         });
 
         builder.setNegativeButton("İptal", (dialog, which) -> dialog.cancel());
@@ -137,6 +155,9 @@ public class AddSpecificationsFragment extends Fragment {
 
                     // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
                     foodRecipe.addMaterial(newCookingStep);
+
+                    // Eklendikten sonra listenin durumunu ekrana yazdır
+                    System.out.println("burada listenin durumu ekrana yazdırılıyor " + foodRecipe.getMaterial());
                 }
                 return true;
             }
