@@ -92,7 +92,7 @@
                             android:textStyle="bold" />
 
                         <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/btnNotEkle"
+                            android:id="@+id/btnYapilis"
                             android:layout_width="match_parent"
                             android:layout_height="60dp"
                             android:layout_marginStart="32dp"
@@ -103,7 +103,7 @@
                             android:drawableStart="@drawable/notekleicon"
                             android:drawablePadding="20dp"
                             android:paddingStart="20dp"
-                            android:text="Not Ekle"
+                            android:text="Yapılış"
                             android:textAlignment="viewStart"
                             android:textSize="18sp"
                             android:textStyle="bold" />
