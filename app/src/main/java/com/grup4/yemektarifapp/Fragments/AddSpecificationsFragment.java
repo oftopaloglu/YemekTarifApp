@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 import com.grup4.yemektarifapp.R;
@@ -46,6 +47,13 @@ public class AddSpecificationsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showAddIngredientDialog();
+            }
+        });
+
+        view.findViewById(R.id.btnYapilis).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddCookingStepsDialog();
             }
         });
 
@@ -108,15 +116,146 @@ public class AddSpecificationsFragment extends Fragment {
         });
     }
 
-    private void addIngredientToFirebase(String ingredient) {
-        // Yeni bir malzeme eklediğinizde "malzemeler" isimli bir belirli bir alan oluşturun
-        // Bu alan altında her malzeme bir belirli bir "malzemeX" ismi ile kaydedilecek
-        Map<String, Object> ingredientData = new HashMap<>();
-        ingredientData.put("malzemeler/malzeme" + ingredientsList.size(), ingredient);
+    //...
 
+    private void showAddCookingStepsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Yapılış Ekle");
+
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_cooking_step, null);
+        final EditText cookingStepEditText = dialogView.findViewById(R.id.edtCookingStep);
+        final ListView cookingStepsListView = dialogView.findViewById(R.id.cookingStepsListView);
+
+        cookingStepsListView.setAdapter(ingredientsAdapter);
+
+        builder.setView(dialogView);
+
+        builder.setPositiveButton("Ekle", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Ekle butonuna basıldığında Firebase'e yapılışı ekle ve liste temizle
+                String newCookingStep = cookingStepEditText.getText().toString().trim();
+                if (!newCookingStep.isEmpty()) {
+                    addCookingStepToFirebase(newCookingStep);
+                    ingredientsList.add(newCookingStep);  // Firebase'e eklenen yapılışı listeye de ekleyin
+                    ingredientsAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        builder.setNegativeButton("İptal", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        // EditText'te Enter'a basıldığında yapılışı listeye ekle
+        cookingStepEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    String newCookingStep = cookingStepEditText.getText().toString().trim();
+                    if (!newCookingStep.isEmpty()) {
+                        // Listeye yapılışı ekle ve adapter'a bildirimde bulun
+                        addCookingStepToFirebase(newCookingStep);
+                        ingredientsList.add(newCookingStep);
+                        ingredientsAdapter.notifyDataSetChanged();
+                        cookingStepEditText.setText("");
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+//...
+
+
+    private void addIngredientToFirebase(String ingredient) {
+        // Firestore'da belgeyi güncellerken mevcut malzemeleri al
         db.collection("yemek_adi")
                 .document("Malzemeler")  // Belge ID'sini uygun bir şekilde belirleyin
-                .set(ingredientData, SetOptions.merge())  // SetOptions.merge() kullanarak belirli bir alana veri ekleyin
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            // Belge varsa malzemeleri al
+                            ArrayList<String> existingIngredients = (ArrayList<String>) documentSnapshot.get("malzemeler");
+
+                            // Yeni malzemeyi ekle
+                            if (existingIngredients == null) {
+                                existingIngredients = new ArrayList<>();
+                            }
+                            existingIngredients.add(ingredient);
+
+                            // Güncellenmiş malzemelerle belgeyi Firestore'a geri yükle
+                            Map<String, Object> updatedData = new HashMap<>();
+                            updatedData.put("malzemeler", existingIngredients);
+
+                            db.collection("yemek_adi")
+                                    .document("Malzemeler")
+                                    .set(updatedData)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // Veri başarıyla eklendiğinde yapılacak işlemleri buraya ekleyebilirsiniz
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Veri eklenirken bir hata oluştuğunda yapılacak işlemleri buraya ekleyebilirsiniz
+                                        }
+                                    });
+                        } else {
+                            // Belge yoksa yeni bir belge oluştur
+                            Map<String, Object> newDocument = new HashMap<>();
+                            ArrayList<String> newIngredientsList = new ArrayList<>();
+                            newIngredientsList.add(ingredient);
+                            newDocument.put("malzemeler", newIngredientsList);
+
+                            db.collection("yemek_adi")
+                                    .document("Malzemeler")
+                                    .set(newDocument)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            // Veri başarıyla eklendiğinde yapılacak işlemleri buraya ekleyebilirsiniz
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            // Veri eklenirken bir hata oluştuğunda yapılacak işlemleri buraya ekleyebilirsiniz
+                                        }
+                                    });
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Belgeye erişimde bir hata oluştuğunda yapılacak işlemleri buraya ekleyebilirsiniz
+                    }
+                });
+    }
+
+
+
+    private void addCookingStepToFirebase(String cookingStep) {
+        Map<String, Object> cookingStepData = new HashMap<>();
+        cookingStepData.put("tarif", cookingStep);
+
+        db.collection("yemek_adi")
+                .document("Tarif")
+                .set(cookingStepData, SetOptions.merge())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
