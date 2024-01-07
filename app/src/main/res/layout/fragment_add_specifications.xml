@@ -60,7 +60,7 @@
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/addphoto"
                             android:layout_width="340dp"
-                            android:layout_height="249dp"
+                            android:layout_height="160dp"
                             android:layout_marginStart="32dp"
                             android:layout_marginTop="35dp"
                             android:layout_marginEnd="32dp"
@@ -104,6 +104,23 @@
                             android:drawablePadding="20dp"
                             android:paddingStart="20dp"
                             android:text="Yapılış"
+                            android:textAlignment="viewStart"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnKaydet"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginEnd="32dp"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/btn_background_1"
+                            android:drawableStart="@drawable/"
+                            android:drawablePadding="20dp"
+                            android:paddingStart="20dp"
+                            android:text="Kaydet"
                             android:textAlignment="viewStart"
                             android:textSize="18sp"
                             android:textStyle="bold" />
