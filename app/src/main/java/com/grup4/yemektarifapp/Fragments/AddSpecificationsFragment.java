@@ -11,20 +11,32 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.grup4.yemektarifapp.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class AddSpecificationsFragment extends Fragment {
 
     private ArrayList<String> ingredientsList;
     private ArrayAdapter<String> ingredientsAdapter;
+    private FirebaseFirestore db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_specifications, container, false);
+
+        // Firebase bağlantısını başlat
+        db = FirebaseFirestore.getInstance();
 
         ingredientsList = new ArrayList<>();
         ingredientsAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, ingredientsList);
@@ -56,7 +68,10 @@ public class AddSpecificationsFragment extends Fragment {
             public void onClick(DialogInterface dialog, int which) {
                 String newIngredient = ingredientEditText.getText().toString().trim();
                 if (!newIngredient.isEmpty()) {
-                    ingredientsList.add(newIngredient);
+                    // Firebase'e malzemeyi ekle ve liste temizle
+                    addIngredientToFirebase(newIngredient);
+
+                    ingredientsList.clear();
                     ingredientsAdapter.notifyDataSetChanged();
                     ingredientEditText.setText("");
                 }
@@ -81,7 +96,10 @@ public class AddSpecificationsFragment extends Fragment {
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     String newIngredient = ingredientEditText.getText().toString().trim();
                     if (!newIngredient.isEmpty()) {
-                        ingredientsList.add(newIngredient);
+                        // Firebase'e malzemeyi ekle ve liste temizle
+                        addIngredientToFirebase(newIngredient);
+
+                        ingredientsList.clear();
                         ingredientsAdapter.notifyDataSetChanged();
                         ingredientEditText.setText("");
                     }
@@ -90,5 +108,26 @@ public class AddSpecificationsFragment extends Fragment {
                 return false;
             }
         });
+    }
+
+    private void addIngredientToFirebase(String ingredient) {
+        // "your_collection" kısmını Firestore veritabanınızdaki gerçek koleksiyon adı ile değiştirin
+        Map<String, Object> ingredientData = new HashMap<>();
+        ingredientData.put("ingredientName", ingredient);
+
+        db.collection("your_collection")
+                .add(ingredientData)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        // Veri başarıyla eklendiğinde yapılacak işlemleri buraya ekleyebilirsiniz
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Veri eklenirken bir hata oluştuğunda yapılacak işlemleri buraya ekleyebilirsiniz
+                    }
+                });
     }
 }
