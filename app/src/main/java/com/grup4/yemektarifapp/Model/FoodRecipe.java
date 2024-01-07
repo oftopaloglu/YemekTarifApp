@@ -1,6 +1,8 @@
 package com.grup4.yemektarifapp.Model;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class FoodRecipe {
@@ -34,4 +36,18 @@ public class FoodRecipe {
 
     public String getPhotoUrl() { return photoUrl; }
     public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+    public FoodRecipe() {
+        this.materials = new ArrayList<>();
+    }
+
+    // material listesine öğe ekleme metodu
+    public void addMaterial(String newMaterial) {
+        this.materials.add(newMaterial);
+    }
+
+    // material listesine erişim sağlayacak metotlar
+    public List<String> getMaterial() {
+        return this.materials;
+    }
+
 }

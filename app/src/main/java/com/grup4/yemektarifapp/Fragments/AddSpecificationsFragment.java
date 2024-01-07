@@ -1,6 +1,7 @@
 package com.grup4.yemektarifapp.Fragments;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.grup4.yemektarifapp.Model.FoodRecipe;
 import com.grup4.yemektarifapp.R;
 import com.grup4.yemektarifapp.databinding.FragmentAddSpecificationsBinding;
+import com.grup4.yemektarifapp.databinding.DialogAddCookingStepBinding;
+import com.grup4.yemektarifapp.databinding.DialogAddIngredientBinding;
+
+import java.util.ArrayList;
 
 public class AddSpecificationsFragment extends Fragment {
 
@@ -28,6 +29,7 @@ public class AddSpecificationsFragment extends Fragment {
     private ArrayList<String> ingredientsList;
     private ArrayAdapter<String> ingredientsAdapter;
     private FirebaseFirestore db;
+    private FoodRecipe foodRecipe;
 
     @Nullable
     @Override
@@ -36,6 +38,8 @@ public class AddSpecificationsFragment extends Fragment {
         View view = binding.getRoot();
 
         db = FirebaseFirestore.getInstance();
+
+        foodRecipe = new FoodRecipe();
 
         ingredientsList = new ArrayList<>();
         ingredientsAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, ingredientsList);
@@ -51,20 +55,22 @@ public class AddSpecificationsFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Malzeme Ekle");
 
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_ingredient, null);
-        final EditText ingredientEditText = dialogView.findViewById(R.id.edtIngredient);
-        final ListView ingredientsListView = dialogView.findViewById(R.id.ingredientsListView);
+        final DialogAddIngredientBinding ingredientBinding = DialogAddIngredientBinding.inflate(getLayoutInflater());
+        builder.setView(ingredientBinding.getRoot());
+
+        final EditText ingredientEditText = ingredientBinding.edtIngredient;
+        final ListView ingredientsListView = ingredientBinding.ingredientsListView;
 
         ingredientsListView.setAdapter(ingredientsAdapter);
-
-        builder.setView(dialogView);
 
         builder.setPositiveButton("Ekle", (dialog, which) -> {
             String newIngredient = ingredientEditText.getText().toString().trim();
             if (!newIngredient.isEmpty()) {
-                addIngredientToFirebase(newIngredient);
                 ingredientsList.add(newIngredient);
                 ingredientsAdapter.notifyDataSetChanged();
+
+                // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
+                foodRecipe.addMaterial(newIngredient);
             }
         });
 
@@ -74,14 +80,16 @@ public class AddSpecificationsFragment extends Fragment {
         alertDialog.show();
 
         ingredientEditText.setOnKeyListener((v, keyCode, event) -> {
-            if ((event.getAction() == android.view.KeyEvent.ACTION_DOWN) &&
-                    (keyCode == android.view.KeyEvent.KEYCODE_ENTER)) {
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 String newIngredient = ingredientEditText.getText().toString().trim();
                 if (!newIngredient.isEmpty()) {
-                    addIngredientToFirebase(newIngredient);
                     ingredientsList.add(newIngredient);
                     ingredientsAdapter.notifyDataSetChanged();
                     ingredientEditText.setText("");
+
+                    // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
+                    foodRecipe.addMaterial(newIngredient);
                 }
                 return true;
             }
@@ -93,20 +101,23 @@ public class AddSpecificationsFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Yapılış Ekle");
 
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_add_cooking_step, null);
-        final EditText cookingStepEditText = dialogView.findViewById(R.id.edtCookingStep);
-        final ListView cookingStepsListView = dialogView.findViewById(R.id.cookingStepsListView);
+        final DialogAddCookingStepBinding cookingStepBinding = DialogAddCookingStepBinding.inflate(getLayoutInflater());
+        builder.setView(cookingStepBinding.getRoot());
+
+        final EditText cookingStepEditText = cookingStepBinding.edtCookingStep;
+        final ListView cookingStepsListView = cookingStepBinding.cookingStepsListView;
 
         cookingStepsListView.setAdapter(ingredientsAdapter);
-
-        builder.setView(dialogView);
 
         builder.setPositiveButton("Ekle", (dialog, which) -> {
             String newCookingStep = cookingStepEditText.getText().toString().trim();
             if (!newCookingStep.isEmpty()) {
-                addCookingStepToFirebase(newCookingStep);
                 ingredientsList.add(newCookingStep);
                 ingredientsAdapter.notifyDataSetChanged();
+
+                // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
+                foodRecipe.addMaterial(newCookingStep);
+                System.out.println("burada listenin durumu ekrana yazdırılıyor "+  foodRecipe.getMaterial());
             }
         });
 
@@ -116,22 +127,34 @@ public class AddSpecificationsFragment extends Fragment {
         alertDialog.show();
 
         cookingStepEditText.setOnKeyListener((v, keyCode, event) -> {
-            if ((event.getAction() == android.view.KeyEvent.ACTION_DOWN) &&
-                    (keyCode == android.view.KeyEvent.KEYCODE_ENTER)) {
+            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 String newCookingStep = cookingStepEditText.getText().toString().trim();
                 if (!newCookingStep.isEmpty()) {
-                    addCookingStepToFirebase(newCookingStep);
                     ingredientsList.add(newCookingStep);
                     ingredientsAdapter.notifyDataSetChanged();
                     cookingStepEditText.setText("");
+
+                    // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
+                    foodRecipe.addMaterial(newCookingStep);
                 }
                 return true;
             }
             return false;
         });
     }
+}
 
-    private void addIngredientToFirebase(String ingredient) {
+
+
+
+
+
+
+
+
+
+   /* private void addIngredientToFirebase(String ingredient) {
         db.collection("yemek_adi")
                 .document("Malzemeler")
                 .get()
@@ -191,5 +214,5 @@ public class AddSpecificationsFragment extends Fragment {
                 .addOnFailureListener(e -> {
                     // Eklenirken bir hata oluştuğunda yapılacak işlemleri buraya ekleyebilirsiniz
                 });
-    }
-}
+    } */
+
