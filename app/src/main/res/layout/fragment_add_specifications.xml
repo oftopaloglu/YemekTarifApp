@@ -117,7 +117,7 @@
                             android:layout_marginEnd="32dp"
                             android:layout_marginBottom="10dp"
                             android:background="@drawable/btn_background_1"
-                            android:drawableStart="@drawable/"
+                            android:drawableStart="@drawable/yemekicon"
                             android:drawablePadding="20dp"
                             android:paddingStart="20dp"
                             android:text="Kaydet"
