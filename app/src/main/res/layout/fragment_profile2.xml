@@ -7,246 +7,153 @@
     tools:context=".Fragments.ProfileFragment"
     android:background="#ececec">
 
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <!-- Ana içerik -->
-        <FrameLayout
-            android:id="@+id/frame_layout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <!-- İçerik detayları buraya gelecek -->
-
-            <ScrollView
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/background"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/arka_plan"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/pagename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profil"
+                    android:textStyle="bold"
+                    android:textSize="40dp"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintBottom_toBottomOf="@+id/background"
+                    app:layout_constraintEnd_toEndOf="@+id/background"
+                    app:layout_constraintStart_toStartOf="@+id/background"
+                    app:layout_constraintTop_toTopOf="@+id/background" />
+
+                <ImageView
+                    android:id="@+id/profilePhoto"
+                    android:layout_width="85dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/baseline_person_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/background"
+                    app:layout_constraintTop_toBottomOf="@+id/background" />
+
+                <TextView
+                    android:id="@+id/nickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oğuzhan Çelik"
+
+                    android:layout_marginTop="16dp"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/profilePhoto"
+                    app:layout_constraintStart_toStartOf="@+id/profilePhoto"
+                    app:layout_constraintTop_toBottomOf="@+id/profilePhoto" />
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Oguzhan.celik92@erzurum.edu.tr"
+                    android:textSize="20sp"
+
+
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="@+id/nickName"
+                    app:layout_constraintStart_toStartOf="@+id/nickName"
+                    app:layout_constraintTop_toBottomOf="@+id/nickName" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/email">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnGoogleAuth"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="60dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_background_1"
+                        android:drawableStart="@drawable/ayalaricon"
+                        android:drawablePadding="20dp"
+                        android:paddingStart="20dp"
+                        android:text="Hesap Ayarları"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textAlignment="viewStart"/>
+                    <androidx.appcompat.widget.AppCompatButton
 
-                        <ImageView
-                            android:id="@+id/background"
-                            android:layout_width="match_parent"
-                            android:layout_height="90dp"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/arka_plan"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent" />
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_background_1"
+                        android:drawableStart="@drawable/yemekicon"
+                        android:drawablePadding="20dp"
+                        android:paddingStart="20dp"
+                        android:text="Favori Yemekler"
+                        android:id="@+id/favFoods"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textAlignment="viewStart"/>
+                    <androidx.appcompat.widget.AppCompatButton
 
-                        <TextView
-                            android:id="@+id/pagename"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Profil"
-                            android:textStyle="bold"
-                            android:textSize="40dp"
-                            android:textColor="#FFFFFF"
-                            app:layout_constraintBottom_toBottomOf="@+id/background"
-                            app:layout_constraintEnd_toEndOf="@+id/background"
-                            app:layout_constraintStart_toStartOf="@+id/background"
-                            app:layout_constraintTop_toTopOf="@+id/background" />
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_background_1"
+                        android:drawableStart="@drawable/yemekicon"
+                        android:drawablePadding="20dp"
+                        android:paddingStart="20dp"
+                        android:text="Yemek Tarifleri"
+                        android:id="@+id/recipes"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textAlignment="viewStart"/>
+                    <!-- Diğer bileşenlerden sonra eklenen çıkış yap butonu -->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="32dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_background_1"
+                        android:drawablePadding="20dp"
+                        android:paddingStart="20dp"
+                        android:text="Çıkış Yap"
+                        android:id="@+id/btnLogoutButton"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textAlignment="viewStart"/>
 
-                        <ImageView
-                            android:id="@+id/profilePhoto"
-                            android:layout_width="85dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/baseline_person_24"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="@+id/background"
-                            app:layout_constraintTop_toBottomOf="@+id/background" />
-
-                        <TextView
-                            android:id="@+id/nickName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Oğuzhan Çelik"
-                            android:layout_marginTop="16dp"
-                            android:textSize="25sp"
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="@+id/profilePhoto"
-                            app:layout_constraintStart_toStartOf="@+id/profilePhoto"
-                            app:layout_constraintTop_toBottomOf="@+id/profilePhoto" />
-
-                        <TextView
-                            android:id="@+id/email"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Oguzhan.celik92@erzurum.edu.tr"
-                            android:textSize="20sp"
-                            android:textStyle="italic"
-                            app:layout_constraintEnd_toEndOf="@+id/nickName"
-                            app:layout_constraintStart_toStartOf="@+id/nickName"
-                            app:layout_constraintTop_toBottomOf="@+id/nickName" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/email">
-
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:id="@+id/btnGoogleAuth"
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:layout_marginStart="32dp"
-                                android:layout_marginTop="23dp"
-                                android:layout_marginEnd="32dp"
-                                android:layout_marginBottom="10dp"
-                                android:background="@drawable/btn_background_1"
-                                android:drawableStart="@drawable/ayalaricon"
-                                android:drawablePadding="20dp"
-                                android:paddingStart="20dp"
-                                android:text="Hesap Ayarları"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:textAlignment="viewStart" />
-
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:layout_marginStart="32dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginEnd="32dp"
-                                android:layout_marginBottom="10dp"
-                                android:background="@drawable/btn_background_1"
-                                android:drawableStart="@drawable/yemekicon"
-                                android:drawablePadding="20dp"
-                                android:paddingStart="20dp"
-                                android:text="Favori Yemekler"
-                                android:id="@+id/favFoods"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:textAlignment="viewStart" />
-
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:layout_marginStart="32dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginEnd="32dp"
-                                android:layout_marginBottom="10dp"
-                                android:background="@drawable/btn_background_1"
-                                android:drawableStart="@drawable/yemekicon"
-                                android:drawablePadding="20dp"
-                                android:paddingStart="20dp"
-                                android:text="Yemek Tarifleri"
-                                android:id="@+id/recipes"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:textAlignment="viewStart" />
-
-                            <androidx.appcompat.widget.AppCompatButton
-                                android:layout_width="match_parent"
-                                android:layout_height="60dp"
-                                android:layout_marginStart="32dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginEnd="32dp"
-                                android:layout_marginBottom="10dp"
-                                android:background="@drawable/btn_background_1"
-                                android:drawablePadding="20dp"
-                                android:paddingStart="20dp"
-                                android:text="Çıkış Yap"
-                                android:id="@+id/btnLogoutButton"
-                                android:textSize="18sp"
-                                android:textStyle="bold"
-                                android:textAlignment="viewStart" />
-                        </LinearLayout>
-                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
-            </ScrollView>
-
-        </FrameLayout>
-
-        <!-- Sol taraftaki drawer içeriği -->
-        <LinearLayout
-            android:id="@+id/left_drawer"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:orientation="vertical"
-            android:background="#D3D3D3">
-
-            <!-- Sol taraftaki içerik buraya eklenecek -->
-
-            <!-- Örnek içerik olarak iki düğme ekleyelim -->
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/left_drawer1"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="33dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_background_1"
-                android:drawablePadding="20dp"
-                android:paddingStart="20dp"
-                android:text="öyleeeee"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textAlignment="viewStart"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/left_drawer2"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="33dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_background_1"
-                android:drawablePadding="20dp"
-                android:paddingStart="20dp"
-                android:text="öylesinee"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textAlignment="viewStart"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/left_drawer3"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="33dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_background_1"
-                android:drawablePadding="20dp"
-                android:paddingStart="20dp"
-                android:text="öylesine"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textAlignment="viewStart"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/left_drawer4"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="33dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/btn_background_1"
-                android:drawablePadding="20dp"
-                android:paddingStart="20dp"
-                android:text="Hakkımızda"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textAlignment="viewStart"/>
-
-            <!-- Diğer öğeleri buraya ekleyebilirsiniz -->
-
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-
-    </androidx.drawerlayout.widget.DrawerLayout>
+    </ScrollView>
 
 </FrameLayout>
