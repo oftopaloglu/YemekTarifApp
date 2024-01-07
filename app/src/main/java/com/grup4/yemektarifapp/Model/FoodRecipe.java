@@ -1,0 +1,37 @@
+package com.grup4.yemektarifapp.Model;
+
+import com.google.gson.annotations.SerializedName;
+import java.util.List;
+
+public class FoodRecipe {
+    @SerializedName("id")
+    private String id;
+
+    @SerializedName("name")
+    private String name;
+
+    @SerializedName("materials")
+    private List<String> materials;
+
+    @SerializedName("notes")
+    private String notes;
+
+    @SerializedName("photo_url")
+    private String photoUrl;
+
+    // Getters and Setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public List<String> getMaterials() { return materials; }
+    public void setMaterials(List<String> materials) { this.materials = materials; }
+
+    public String getNotes() { return notes; }
+    public void setNotes(String notes) { this.notes = notes; }
+
+    public String getPhotoUrl() { return photoUrl; }
+    public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+}
