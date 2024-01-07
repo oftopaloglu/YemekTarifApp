@@ -1,36 +1,37 @@
 package com.grup4.yemektarifapp.Model;
 
 import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 public class FoodRecipe {
-    @SerializedName("index")
-    private long index;
+    @SerializedName("id")
+    private String id;
 
-    @SerializedName("type")
-    private String type;
+    @SerializedName("name")
+    private String name;
 
-    @SerializedName("color")
-    private String color;
+    @SerializedName("materials")
+    private List<String> materials;
 
-    @SerializedName("enabled")
-    private boolean enabled;
+    @SerializedName("notes")
+    private String notes;
 
-    @SerializedName("value")
-    private double value;
+    @SerializedName("photo_url")
+    private String photoUrl;
 
     // Getters and Setters
-    public long getIndex() { return index; }
-    public void setIndex(long value) { this.index = value; }
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public String getType() { return type; }
-    public void setType(String value) { this.type = value; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getColor() { return color; }
-    public void setColor(String value) { this.color = value; }
+    public List<String> getMaterials() { return materials; }
+    public void setMaterials(List<String> materials) { this.materials = materials; }
 
-    public boolean getEnabled() { return enabled; }
-    public void setEnabled(boolean value) { this.enabled = value; }
+    public String getNotes() { return notes; }
+    public void setNotes(String notes) { this.notes = notes; }
 
-    public double getValue() { return value; }
-    public void setValue(double value) { this.value = value; }
+    public String getPhotoUrl() { return photoUrl; }
+    public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
 }
