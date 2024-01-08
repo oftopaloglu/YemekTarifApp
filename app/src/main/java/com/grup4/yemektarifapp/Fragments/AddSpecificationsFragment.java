@@ -29,6 +29,8 @@ public class AddSpecificationsFragment extends Fragment {
     private FragmentAddSpecificationsBinding binding;
     private ArrayList<String> MalzemeListesi;
     private ArrayAdapter<String> MalzemeAdapter;
+    private ArrayList<String> YapilisListesi;
+    private ArrayAdapter<String> YapilisAdapter;
     private FirebaseFirestore db;
     private FoodRecipe foodRecipe;
 
@@ -44,6 +46,9 @@ public class AddSpecificationsFragment extends Fragment {
 
         MalzemeListesi = new ArrayList<>();
         MalzemeAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, MalzemeListesi);
+
+        YapilisListesi = new ArrayList<>();
+        YapilisAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, YapilisListesi);
 
         binding.btnMalzemeler.setOnClickListener(v -> malzemeEkleDialog());
         binding.btnYapilis.setOnClickListener(v -> yapilisEkleDialog());
@@ -122,13 +127,13 @@ public class AddSpecificationsFragment extends Fragment {
         final EditText yapilisEditText = yapilisBinding.editYapilis;
         final ListView yapilisListView = yapilisBinding.yapilisListView;
 
-        yapilisListView.setAdapter(MalzemeAdapter);
+        yapilisListView.setAdapter(YapilisAdapter);
 
         builder.setPositiveButton("Ekle", (dialog, which) -> {
             String newCookingStep = yapilisEditText.getText().toString().trim();
             if (!newCookingStep.isEmpty()) {
-                MalzemeListesi.add(newCookingStep);
-                MalzemeAdapter.notifyDataSetChanged();
+                YapilisListesi.add(newCookingStep);
+                YapilisAdapter.notifyDataSetChanged();
 
                 // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
                 foodRecipe.addMaterial(newCookingStep);
@@ -151,8 +156,8 @@ public class AddSpecificationsFragment extends Fragment {
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 String newCookingStep = yapilisEditText.getText().toString().trim();
                 if (!newCookingStep.isEmpty()) {
-                    MalzemeListesi.add(newCookingStep);
-                    MalzemeAdapter.notifyDataSetChanged();
+                    YapilisListesi.add(newCookingStep);
+                    YapilisAdapter.notifyDataSetChanged();
                     yapilisEditText.setText("");
 
                     // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
