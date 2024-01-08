@@ -16,10 +16,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.grup4.yemektarifapp.Model.FoodRecipe;
-import com.grup4.yemektarifapp.R;
 import com.grup4.yemektarifapp.databinding.FragmentAddSpecificationsBinding;
 import com.grup4.yemektarifapp.databinding.DialogAddCookingStepBinding;
-import com.grup4.yemektarifapp.databinding.DialogAddIngredientBinding;
+import com.grup4.yemektarifapp.databinding.DialogMalzemeEkleBinding;
 
 import java.util.ArrayList;
 import android.view.inputmethod.EditorInfo;
@@ -28,8 +27,8 @@ import android.view.inputmethod.EditorInfo;
 public class AddSpecificationsFragment extends Fragment {
 
     private FragmentAddSpecificationsBinding binding;
-    private ArrayList<String> ingredientsList;
-    private ArrayAdapter<String> ingredientsAdapter;
+    private ArrayList<String> MalzemeListesi;
+    private ArrayAdapter<String> MalzemeAdapter;
     private FirebaseFirestore db;
     private FoodRecipe foodRecipe;
 
@@ -43,12 +42,12 @@ public class AddSpecificationsFragment extends Fragment {
 
         foodRecipe = new FoodRecipe();
 
-        ingredientsList = new ArrayList<>();
-        ingredientsAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, ingredientsList);
+        MalzemeListesi = new ArrayList<>();
+        MalzemeAdapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, MalzemeListesi);
 
-        binding.btnMalzemeler.setOnClickListener(v -> showAddIngredientDialog());
+        binding.btnMalzemeler.setOnClickListener(v -> malzemeEkleDialog());
+        binding.btnYapilis.setOnClickListener(v -> yapilisEkleDialog());
 
-        binding.btnYapilis.setOnClickListener(v -> showAddCookingStepsDialog());
         binding.editYemekAdi.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 // Enter tuşuna basıldığında buraya gelir
@@ -65,19 +64,20 @@ public class AddSpecificationsFragment extends Fragment {
         return view;
     }
 
-    private void showAddIngredientDialog() {
+    private void malzemeEkleDialog() {
+        System.out.println("1");
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Malzeme Ekle");
 
-        DialogAddIngredientBinding ingredientBinding = DialogAddIngredientBinding.inflate(getLayoutInflater());
-        builder.setView(ingredientBinding.getRoot());
+        DialogMalzemeEkleBinding malzemeBinding = DialogMalzemeEkleBinding.inflate(getLayoutInflater());
+        builder.setView(malzemeBinding.getRoot());
 
-        EditText ingredientEditText = ingredientBinding.edtIngredient;
-        ListView ingredientsListView = ingredientBinding.ingredientsListView;
-        ingredientsListView.setAdapter(ingredientsAdapter);
+        EditText malzemeEditText = malzemeBinding.editMalzeme;
+        ListView malzemeListView = malzemeBinding.malzemeListView;
+        malzemeListView.setAdapter(MalzemeAdapter);
 
         builder.setPositiveButton("Ekle", (dialog, which) -> {
-            addIngredientToList(ingredientEditText.getText().toString().trim());
+            addIngredientToList(malzemeEditText.getText().toString().trim());
         });
 
         builder.setNegativeButton("İptal", (dialog, which) -> dialog.cancel());
@@ -85,9 +85,9 @@ public class AddSpecificationsFragment extends Fragment {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        ingredientEditText.setOnKeyListener((v, keyCode, event) -> {
+        malzemeEditText.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                addIngredientToList(ingredientEditText.getText().toString().trim());
+                addIngredientToList(malzemeEditText.getText().toString().trim());
                 return true;
             }
             return false;
@@ -95,9 +95,10 @@ public class AddSpecificationsFragment extends Fragment {
     }
 
     private void addIngredientToList(String newIngredient) {
+        System.out.println("2");
         if (!newIngredient.isEmpty()) {
-            ingredientsList.add(newIngredient);
-            ingredientsAdapter.notifyDataSetChanged();
+            MalzemeListesi.add(newIngredient);
+            MalzemeAdapter.notifyDataSetChanged();
 
             // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
             foodRecipe.addMaterial(newIngredient);
@@ -110,7 +111,8 @@ public class AddSpecificationsFragment extends Fragment {
 
     // Diğer metotlar
 
-    private void showAddCookingStepsDialog() {
+    private void yapilisEkleDialog() {
+        System.out.println("3");
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Yapılış Ekle");
 
@@ -120,13 +122,13 @@ public class AddSpecificationsFragment extends Fragment {
         final EditText cookingStepEditText = cookingStepBinding.edtCookingStep;
         final ListView cookingStepsListView = cookingStepBinding.cookingStepsListView;
 
-        cookingStepsListView.setAdapter(ingredientsAdapter);
+        cookingStepsListView.setAdapter(MalzemeAdapter);
 
         builder.setPositiveButton("Ekle", (dialog, which) -> {
             String newCookingStep = cookingStepEditText.getText().toString().trim();
             if (!newCookingStep.isEmpty()) {
-                ingredientsList.add(newCookingStep);
-                ingredientsAdapter.notifyDataSetChanged();
+                MalzemeListesi.add(newCookingStep);
+                MalzemeAdapter.notifyDataSetChanged();
 
                 // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
                 foodRecipe.addMaterial(newCookingStep);
@@ -149,8 +151,8 @@ public class AddSpecificationsFragment extends Fragment {
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 String newCookingStep = cookingStepEditText.getText().toString().trim();
                 if (!newCookingStep.isEmpty()) {
-                    ingredientsList.add(newCookingStep);
-                    ingredientsAdapter.notifyDataSetChanged();
+                    MalzemeListesi.add(newCookingStep);
+                    MalzemeAdapter.notifyDataSetChanged();
                     cookingStepEditText.setText("");
 
                     // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
