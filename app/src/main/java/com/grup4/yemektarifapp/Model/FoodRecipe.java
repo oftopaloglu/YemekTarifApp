@@ -36,7 +36,8 @@ public class FoodRecipe {
 
     public String getPhotoUrl() { return photoUrl; }
     public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
-    
+
+
     public FoodRecipe() {
         this.materials = new ArrayList<>();
     }

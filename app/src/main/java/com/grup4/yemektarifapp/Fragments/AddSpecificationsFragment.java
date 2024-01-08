@@ -81,22 +81,19 @@ public class AddSpecificationsFragment extends Fragment {
         ListView malzemeListView = malzemeBinding.malzemeListView;
         malzemeListView.setAdapter(MalzemeAdapter);
 
-        builder.setPositiveButton("Ekle", (dialog, which) -> {
-            listeyeMalzemeEkle(malzemeEditText.getText().toString().trim());
-        });
-
-        builder.setNegativeButton("İptal", (dialog, which) -> dialog.cancel());
+        builder.setPositiveButton("Ekle", null);
+        builder.setNegativeButton("Tamam", (dialog, which) -> dialog.cancel());
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        malzemeEditText.setOnKeyListener((v, keyCode, event) -> {
-            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                listeyeMalzemeEkle(malzemeEditText.getText().toString().trim());
-                return true;
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String malzeme = malzemeEditText.getText().toString().trim();
+            if (!malzeme.isEmpty()) {
+                listeyeMalzemeEkle(malzeme);
             }
-            return false;
         });
+
     }
 
     private void listeyeMalzemeEkle(String yeniMalzeme) {
@@ -106,10 +103,21 @@ public class AddSpecificationsFragment extends Fragment {
             MalzemeAdapter.notifyDataSetChanged();
 
             // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
-            foodRecipe.addMaterial(yeniMalzeme);
+            foodRecipe.setMaterials(MalzemeListesi);
 
             // Eklendikten sonra listenin durumunu ekrana yazdır
-            System.out.println("burada listenin durumu ekrana yazdırılıyor " + foodRecipe.getMaterial());
+            System.out.println("getMaterials " + foodRecipe.getMaterials());
+        }
+    }
+
+    private void listeyeYapilisEkle(String yeniYapilis){
+        if (!yeniYapilis.isEmpty()){
+            YapilisListesi.add(yeniYapilis);
+            YapilisAdapter.notifyDataSetChanged();
+
+            foodRecipe.setNotes(YapilisListesi);
+
+            System.out.println("getNotes " + foodRecipe.getNotes());
         }
     }
 
@@ -129,47 +137,21 @@ public class AddSpecificationsFragment extends Fragment {
 
         yapilisListView.setAdapter(YapilisAdapter);
 
-        builder.setPositiveButton("Ekle", (dialog, which) -> {
-            String newCookingStep = yapilisEditText.getText().toString().trim();
-            if (!newCookingStep.isEmpty()) {
-                YapilisListesi.add(newCookingStep);
-                YapilisAdapter.notifyDataSetChanged();
-
-                // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
-                foodRecipe.addMaterial(newCookingStep);
-
-                // Eklendikten sonra listenin durumunu ekrana yazdır
-                // girilen yemek adını da yazdır
-
-                System.out.println("burada listenin durumu ekrana yazdırılıyor " + foodRecipe.getMaterial());
-            }
-            System.out.println("yemek adı " + foodRecipe.getName());
-        });
-
-        builder.setNegativeButton("İptal", (dialog, which) -> dialog.cancel());
+        builder.setPositiveButton("Ekle", null);
+        builder.setNegativeButton("Tamam", (dialog, which) -> dialog.cancel());
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        yapilisEditText.setOnKeyListener((v, keyCode, event) -> {
-            if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                String newCookingStep = yapilisEditText.getText().toString().trim();
-                if (!newCookingStep.isEmpty()) {
-                    YapilisListesi.add(newCookingStep);
-                    YapilisAdapter.notifyDataSetChanged();
-                    yapilisEditText.setText("");
-
-                    // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
-                    foodRecipe.addMaterial(newCookingStep);
-
-                    // Eklendikten sonra listenin durumunu ekrana yazdır
-                    System.out.println("burada listenin durumu ekrana yazdırılıyor " + foodRecipe.getMaterial());
-                }
-                return true;
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            String yapilis = yapilisEditText.getText().toString().trim();
+            if (!yapilis.isEmpty()) {
+                listeyeYapilisEkle(yapilis);
             }
-            return false;
         });
+
+
+
     }
 }
 
