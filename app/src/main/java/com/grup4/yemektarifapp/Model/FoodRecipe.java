@@ -16,7 +16,7 @@ public class FoodRecipe {
     private List<String> materials;
 
     @SerializedName("notes")
-    private String notes;
+    private List<String> notes;
 
     @SerializedName("photo_url")
     private String photoUrl;
@@ -31,11 +31,12 @@ public class FoodRecipe {
     public List<String> getMaterials() { return materials; }
     public void setMaterials(List<String> materials) { this.materials = materials; }
 
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
+    public List<String> getNotes() { return notes; }
+    public void setNotes(List<String> notes) { this.notes = notes; }
 
     public String getPhotoUrl() { return photoUrl; }
     public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+    
     public FoodRecipe() {
         this.materials = new ArrayList<>();
     }
