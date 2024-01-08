@@ -26,6 +26,7 @@ import com.grup4.yemektarifapp.databinding.DialogMalzemeEkleBinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import android.view.inputmethod.EditorInfo;
@@ -209,4 +210,22 @@ public class AddSpecificationsFragment extends Fragment {
                     // e.g., Log the error or show a message to the user
                 });
     }
+
+    // bu kodu kullanarak firabase veri ekleyebiliriz
+    private void firebaseKaydetFoodRecipeList(List<FoodRecipe> recipeList) {
+        for (FoodRecipe recipe : recipeList) {
+            // Belge kimliğini özel olarak atayarak ekleme işlemi
+            db.collection("tarifler").document(recipe.getId()).set(recipe)
+                    .addOnSuccessListener(aVoid -> {
+                        // Ekleme başarılı olduğunda yapılacak işlemler
+                        Log.d("Firestore", "Belge başarıyla eklendi. ID: " + recipe.getId());
+                    })
+                    .addOnFailureListener(e -> {
+                        // Ekleme başarısız olduğunda yapılacak işlemler
+                        Log.w("Firestore", "Belge eklenirken hata oluştu.", e);
+                    });
+        }
+    }
+
+
 }
