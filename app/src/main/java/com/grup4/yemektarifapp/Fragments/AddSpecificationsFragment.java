@@ -77,7 +77,7 @@ public class AddSpecificationsFragment extends Fragment {
         malzemeListView.setAdapter(MalzemeAdapter);
 
         builder.setPositiveButton("Ekle", (dialog, which) -> {
-            addIngredientToList(malzemeEditText.getText().toString().trim());
+            listeyeMalzemeEkle(malzemeEditText.getText().toString().trim());
         });
 
         builder.setNegativeButton("İptal", (dialog, which) -> dialog.cancel());
@@ -87,21 +87,21 @@ public class AddSpecificationsFragment extends Fragment {
 
         malzemeEditText.setOnKeyListener((v, keyCode, event) -> {
             if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                addIngredientToList(malzemeEditText.getText().toString().trim());
+                listeyeMalzemeEkle(malzemeEditText.getText().toString().trim());
                 return true;
             }
             return false;
         });
     }
 
-    private void addIngredientToList(String newIngredient) {
+    private void listeyeMalzemeEkle(String yeniMalzeme) {
         System.out.println("2");
-        if (!newIngredient.isEmpty()) {
-            MalzemeListesi.add(newIngredient);
+        if (!yeniMalzeme.isEmpty()) {
+            MalzemeListesi.add(yeniMalzeme);
             MalzemeAdapter.notifyDataSetChanged();
 
             // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
-            foodRecipe.addMaterial(newIngredient);
+            foodRecipe.addMaterial(yeniMalzeme);
 
             // Eklendikten sonra listenin durumunu ekrana yazdır
             System.out.println("burada listenin durumu ekrana yazdırılıyor " + foodRecipe.getMaterial());
@@ -138,7 +138,7 @@ public class AddSpecificationsFragment extends Fragment {
 
                 System.out.println("burada listenin durumu ekrana yazdırılıyor " + foodRecipe.getMaterial());
             }
-            System.out.printf("yemek adı " , foodRecipe.getName());
+            System.out.println("yemek adı " + foodRecipe.getName());
         });
 
         builder.setNegativeButton("İptal", (dialog, which) -> dialog.cancel());
