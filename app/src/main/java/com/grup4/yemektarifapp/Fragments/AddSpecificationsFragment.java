@@ -15,12 +15,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 import com.grup4.yemektarifapp.Model.FoodRecipe;
 import com.grup4.yemektarifapp.databinding.FragmentAddSpecificationsBinding;
 import com.grup4.yemektarifapp.databinding.DialogYapilisEkleBinding;
 import com.grup4.yemektarifapp.databinding.DialogMalzemeEkleBinding;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
@@ -53,10 +57,31 @@ public class AddSpecificationsFragment extends Fragment {
 
         binding.btnMalzemeler.setOnClickListener(v -> malzemeEkleDialog());
         binding.btnYapilis.setOnClickListener(v -> yapilisEkleDialog());
+        binding.btnKaydet.setOnClickListener(v -> firebaseKaydet());
 
         binding.editYemekAdi.setOnEditorActionListener(this::yemekAdiEkle);
 
         return view;
+    }
+
+    private void firebaseKaydet() {
+        foodRecipe.setId("1");
+        foodRecipe.setName("Tarif Adı");
+        foodRecipe.setMaterials(Arrays.asList("malzeme1", "malzeme2"));
+        foodRecipe.setNotes(Arrays.asList("not1", "not2"));
+        foodRecipe.setPhotoUrl("url");
+
+        // Gson nesnesi oluşturun
+        Gson gson = new Gson();
+
+        // Nesneyi JSON'a dönüştürün
+        String json = gson.toJson(foodRecipe);
+
+        // JSON stringini bir Map'e dönüştürün
+        Map<String, Object> recipeMap = gson.fromJson(json, Map.class);
+
+        // Veriyi Firestore'a yazın
+        db.collection("tarifler").document(foodRecipe.getName()).set(recipeMap);
     }
 
     private boolean yemekAdiEkle(TextView v, int actionId, KeyEvent event) {
