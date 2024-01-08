@@ -22,6 +22,7 @@ import com.grup4.yemektarifapp.databinding.DialogMalzemeEkleBinding;
 
 import java.util.ArrayList;
 import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 
 public class AddSpecificationsFragment extends Fragment {
@@ -53,17 +54,18 @@ public class AddSpecificationsFragment extends Fragment {
         binding.btnMalzemeler.setOnClickListener(v -> malzemeEkleDialog());
         binding.btnYapilis.setOnClickListener(v -> yapilisEkleDialog());
 
-        binding.editYemekAdi.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                // Enter tuşuna basıldığında buraya gelir
+        binding.editYemekAdi.setOnEditorActionListener(this::yemekAdiEkle);
 
-                foodRecipe.setName(binding.editYemekAdi.getText().toString().trim());
-                System.out.println(" ife girdi yemek adı  " + foodRecipe.getName());
-                return true; // Olayın tüketildiğini belirt
-            }
-            return false; // Olayın işlenmediğini belirt
-        });
         return view;
+    }
+
+    private boolean yemekAdiEkle(TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            foodRecipe.setName(v.getText().toString().trim());
+            System.out.println(" ife girdi yemek adı  " + foodRecipe.getName());
+            return true;
+        }
+        return false;
     }
     private void malzemeEkleDialog() {
         System.out.println("1");
@@ -143,7 +145,7 @@ public class AddSpecificationsFragment extends Fragment {
             System.out.println("getNotes " + foodRecipe.getNotes());
         }
     }
-    
+
 }
 
 
