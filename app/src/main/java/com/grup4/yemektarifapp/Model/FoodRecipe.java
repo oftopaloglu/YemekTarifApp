@@ -43,19 +43,14 @@ public class FoodRecipe {
                 (notes == null || notes.isEmpty());
     }
 
-
-    public FoodRecipe() {
-        this.materials = new ArrayList<>();
+    @Override
+    public String toString() {
+        return "FoodRecipe{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", materials=" + materials +
+                ", notes=" + notes +
+                ", photoUrl='" + photoUrl + '\'' +
+                '}';
     }
-
-    // material listesine öğe ekleme metodu
-    public void addMaterial(String newMaterial) {
-        this.materials.add(newMaterial);
-    }
-
-    // material listesine erişim sağlayacak metotlar
-    public List<String> getMaterial() {
-        return this.materials;
-    }
-
 }

@@ -1,6 +1,7 @@
 package com.grup4.yemektarifapp.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.gson.Gson;
 import com.grup4.yemektarifapp.Model.FoodRecipe;
 import com.grup4.yemektarifapp.databinding.FragmentAddSpecificationsBinding;
@@ -39,6 +42,7 @@ public class AddSpecificationsFragment extends Fragment {
     private FirebaseFirestore db;
     private FoodRecipe foodRecipe;
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,6 +65,8 @@ public class AddSpecificationsFragment extends Fragment {
 
         binding.editYemekAdi.setOnEditorActionListener(this::yemekAdiEkle);
 
+        binding.addphoto.setOnClickListener(v -> fetchAllRecipesFromFirestore());
+
         return view;
     }
 
@@ -71,6 +77,8 @@ public class AddSpecificationsFragment extends Fragment {
         Map<String, Object> tarifMap = gson.fromJson(json, Map.class);
         db.collection("tarifler").document(foodRecipe.getName()).set(tarifMap);
     }}
+
+    
 
     private boolean yemekAdiEkle(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -158,77 +166,47 @@ public class AddSpecificationsFragment extends Fragment {
             System.out.println("getNotes " + foodRecipe.getNotes());
         }
     }
-
-}
-
-
-
-
-
-
-
-
-
-
-   /* private void addIngredientToFirebase(String ingredient) {
-        db.collection("yemek_adi")
-                .document("Malzemeler")
+    private void fetchDataFromFirestore() {
+        db.collection("tarifler").document("musakka")
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        ArrayList<String> existingIngredients = (ArrayList<String>) documentSnapshot.get("malzemeler");
+                        FoodRecipe fetchedRecipe = documentSnapshot.toObject(FoodRecipe.class);
 
-                        if (existingIngredients == null) {
-                            existingIngredients = new ArrayList<>();
-                        }
-                        existingIngredients.add(ingredient);
-
-                        Map<String, Object> updatedData = new HashMap<>();
-                        updatedData.put("malzemeler", existingIngredients);
-
-                        db.collection("yemek_adi")
-                                .document("Malzemeler")
-                                .set(updatedData)
-                                .addOnSuccessListener(aVoid -> {
-                                    // Başarıyla eklendiğinde yapılacak işlemleri buraya ekleyebilirsiniz
-                                })
-                                .addOnFailureListener(e -> {
-                                    // Eklenirken bir hata oluştuğunda yapılacak işlemleri buraya ekleyebilirsiniz
-                                });
+                        System.out.println(fetchedRecipe.getMaterials());
                     } else {
-                        Map<String, Object> newDocument = new HashMap<>();
-                        ArrayList<String> newIngredientsList = new ArrayList<>();
-                        newIngredientsList.add(ingredient);
-                        newDocument.put("malzemeler", newIngredientsList);
-
-                        db.collection("yemek_adi")
-                                .document("Malzemeler")
-                                .set(newDocument)
-                                .addOnSuccessListener(aVoid -> {
-                                    // Başarıyla eklendiğinde yapılacak işlemleri buraya ekleyebilirsiniz
-                                })
-                                .addOnFailureListener(e -> {
-                                    // Eklenirken bir hata oluştuğunda yapılacak işlemleri buraya ekleyebilirsiniz
-                                });
+                        // Document does not exist
+                        System.out.println("olmadı");
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Erişimde bir hata oluştuğunda yapılacak işlemleri buraya ekleyebilirsiniz
+                    System.out.println("o2");
+                    // Handle failures in fetching data
+                    // e.g., Log the error or show a message to the user
                 });
     }
+    private void fetchAllRecipesFromFirestore() {
+        db.collection("tarifler")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        // Loop through each document and get its data
+                        if (documentSnapshot.exists()) {
+                            FoodRecipe fetchedRecipe = documentSnapshot.toObject(FoodRecipe.class);
 
-    private void addCookingStepToFirebase(String cookingStep) {
-        Map<String, Object> cookingStepData = new HashMap<>();
-        cookingStepData.put("tarif", cookingStep);
+                            if (fetchedRecipe != null) {
+                                // Perform operations with fetchedRecipe
+                                // For example, log the recipe name
+                                System.out.println(fetchedRecipe.toString());
 
-        db.collection("yemek_adi")
-                .document("Tarif")
-                .set(cookingStepData)
-                .addOnSuccessListener(aVoid -> {
-                    // Başarıyla eklendiğinde yapılacak işlemleri buraya ekleyebilirsiniz
+                                // Here you can perform any additional operations with the fetched recipe
+                            }
+                        }
+                    }
                 })
                 .addOnFailureListener(e -> {
-                    // Eklenirken bir hata oluştuğunda yapılacak işlemleri buraya ekleyebilirsiniz
+                    // Handle failures in fetching data
+                    // e.g., Log the error or show a message to the user
                 });
-    } */
-
+    }
+}
