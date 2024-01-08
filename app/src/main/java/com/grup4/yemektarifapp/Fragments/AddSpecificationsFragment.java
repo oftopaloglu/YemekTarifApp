@@ -63,12 +63,8 @@ public class AddSpecificationsFragment extends Fragment {
             }
             return false; // Olayın işlenmediğini belirt
         });
-
-
-
         return view;
     }
-
     private void malzemeEkleDialog() {
         System.out.println("1");
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -91,11 +87,10 @@ public class AddSpecificationsFragment extends Fragment {
             String malzeme = malzemeEditText.getText().toString().trim();
             if (!malzeme.isEmpty()) {
                 listeyeMalzemeEkle(malzeme);
+                malzemeEditText.setText("");
             }
         });
-
     }
-
     private void listeyeMalzemeEkle(String yeniMalzeme) {
         System.out.println("2");
         if (!yeniMalzeme.isEmpty()) {
@@ -109,20 +104,6 @@ public class AddSpecificationsFragment extends Fragment {
             System.out.println("getMaterials " + foodRecipe.getMaterials());
         }
     }
-
-    private void listeyeYapilisEkle(String yeniYapilis){
-        if (!yeniYapilis.isEmpty()){
-            YapilisListesi.add(yeniYapilis);
-            YapilisAdapter.notifyDataSetChanged();
-
-            foodRecipe.setNotes(YapilisListesi);
-
-            System.out.println("getNotes " + foodRecipe.getNotes());
-        }
-    }
-
-
-    // Diğer metotlar
 
     private void yapilisEkleDialog() {
         System.out.println("3");
@@ -147,12 +128,22 @@ public class AddSpecificationsFragment extends Fragment {
             String yapilis = yapilisEditText.getText().toString().trim();
             if (!yapilis.isEmpty()) {
                 listeyeYapilisEkle(yapilis);
+                yapilisEditText.setText("");
+
             }
         });
-
-
-
     }
+    private void listeyeYapilisEkle(String yeniYapilis){
+        if (!yeniYapilis.isEmpty()){
+            YapilisListesi.add(yeniYapilis);
+            YapilisAdapter.notifyDataSetChanged();
+
+            foodRecipe.setNotes(YapilisListesi);
+
+            System.out.println("getNotes " + foodRecipe.getNotes());
+        }
+    }
+    
 }
 
 
