@@ -65,24 +65,12 @@ public class AddSpecificationsFragment extends Fragment {
     }
 
     private void firebaseKaydet() {
-        foodRecipe.setId("1");
-        foodRecipe.setName("Tarif Adı");
-        foodRecipe.setMaterials(Arrays.asList("malzeme1", "malzeme2"));
-        foodRecipe.setNotes(Arrays.asList("not1", "not2"));
-        foodRecipe.setPhotoUrl("url");
-
-        // Gson nesnesi oluşturun
+        if (!foodRecipe.isEmpty()){
         Gson gson = new Gson();
-
-        // Nesneyi JSON'a dönüştürün
         String json = gson.toJson(foodRecipe);
-
-        // JSON stringini bir Map'e dönüştürün
-        Map<String, Object> recipeMap = gson.fromJson(json, Map.class);
-
-        // Veriyi Firestore'a yazın
-        db.collection("tarifler").document(foodRecipe.getName()).set(recipeMap);
-    }
+        Map<String, Object> tarifMap = gson.fromJson(json, Map.class);
+        db.collection("tarifler").document(foodRecipe.getName()).set(tarifMap);
+    }}
 
     private boolean yemekAdiEkle(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {

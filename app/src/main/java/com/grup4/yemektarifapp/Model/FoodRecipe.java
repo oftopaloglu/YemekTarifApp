@@ -38,6 +38,12 @@ public class FoodRecipe {
     public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
 
 
+    public boolean isEmpty() {
+        return name == null && (materials == null || materials.isEmpty()) &&
+                (notes == null || notes.isEmpty());
+    }
+
+
     public FoodRecipe() {
         this.materials = new ArrayList<>();
     }
