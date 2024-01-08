@@ -4,13 +4,13 @@
     android:orientation="vertical">
 
     <EditText
-        android:id="@+id/edtCookingStep"
+        android:id="@+id/editYapilis"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Yapılış Adımını Ekleyin" />
 
     <ListView
-        android:id="@+id/cookingStepsListView"
+        android:id="@+id/yapilisListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>

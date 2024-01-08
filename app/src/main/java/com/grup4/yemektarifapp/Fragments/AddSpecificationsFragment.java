@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.grup4.yemektarifapp.Model.FoodRecipe;
 import com.grup4.yemektarifapp.databinding.FragmentAddSpecificationsBinding;
-import com.grup4.yemektarifapp.databinding.DialogAddCookingStepBinding;
+import com.grup4.yemektarifapp.databinding.DialogYapilisEkleBinding;
 import com.grup4.yemektarifapp.databinding.DialogMalzemeEkleBinding;
 
 import java.util.ArrayList;
@@ -116,16 +116,16 @@ public class AddSpecificationsFragment extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle("Yapılış Ekle");
 
-        final DialogAddCookingStepBinding cookingStepBinding = DialogAddCookingStepBinding.inflate(getLayoutInflater());
-        builder.setView(cookingStepBinding.getRoot());
+        final DialogYapilisEkleBinding yapilisBinding = DialogYapilisEkleBinding.inflate(getLayoutInflater());
+        builder.setView(yapilisBinding.getRoot());
 
-        final EditText cookingStepEditText = cookingStepBinding.edtCookingStep;
-        final ListView cookingStepsListView = cookingStepBinding.cookingStepsListView;
+        final EditText yapilisEditText = yapilisBinding.editYapilis;
+        final ListView yapilisListView = yapilisBinding.yapilisListView;
 
-        cookingStepsListView.setAdapter(MalzemeAdapter);
+        yapilisListView.setAdapter(MalzemeAdapter);
 
         builder.setPositiveButton("Ekle", (dialog, which) -> {
-            String newCookingStep = cookingStepEditText.getText().toString().trim();
+            String newCookingStep = yapilisEditText.getText().toString().trim();
             if (!newCookingStep.isEmpty()) {
                 MalzemeListesi.add(newCookingStep);
                 MalzemeAdapter.notifyDataSetChanged();
@@ -146,14 +146,14 @@ public class AddSpecificationsFragment extends Fragment {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
-        cookingStepEditText.setOnKeyListener((v, keyCode, event) -> {
+        yapilisEditText.setOnKeyListener((v, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                     (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                String newCookingStep = cookingStepEditText.getText().toString().trim();
+                String newCookingStep = yapilisEditText.getText().toString().trim();
                 if (!newCookingStep.isEmpty()) {
                     MalzemeListesi.add(newCookingStep);
                     MalzemeAdapter.notifyDataSetChanged();
-                    cookingStepEditText.setText("");
+                    yapilisEditText.setText("");
 
                     // Eklendiğinde FoodRecipe sınıfındaki material listesine eklemeyi çağır
                     foodRecipe.addMaterial(newCookingStep);
