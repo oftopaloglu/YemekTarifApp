@@ -1,6 +1,8 @@
 package com.grup4.yemektarifapp.adaptor;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -14,6 +16,8 @@ import com.grup4.yemektarifapp.Model.FoodRecipe;
 import com.grup4.yemektarifapp.databinding.ItemBinding;
 
 import java.util.List;
+
+import kotlin.UByteArray;
 
 public class TariflerAdaptor extends RecyclerView.Adapter<TariflerAdaptor.ViewHolder> {
 
@@ -71,9 +75,13 @@ public class TariflerAdaptor extends RecyclerView.Adapter<TariflerAdaptor.ViewHo
             }
 
             // Yemek Fotoğrafı
-            String photoUrl = foodRecipe.getPhotoUrl();
-            if (photoUrl != null && !photoUrl.isEmpty()) {
-                Glide.with(binding.getRoot().getContext()).load(photoUrl).into(binding.foodImage);
+            byte[] photoUrlBytes = foodRecipe.getPhotoUrlBytes();
+            if (photoUrlBytes != null && photoUrlBytes.length > 0) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(photoUrlBytes, 0, photoUrlBytes.length);
+
+                Glide.with(binding.getRoot().getContext())
+                        .load(bitmap)
+                        .into(binding.foodImage);
             }
 
             // Yapılış Şekli

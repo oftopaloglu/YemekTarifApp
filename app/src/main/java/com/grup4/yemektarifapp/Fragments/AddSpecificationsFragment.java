@@ -1,6 +1,13 @@
 package com.grup4.yemektarifapp.Fragments;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +28,7 @@ import com.grup4.yemektarifapp.Model.FoodRecipe;
 import com.grup4.yemektarifapp.databinding.FragmentAddSpecificationsBinding;
 import com.grup4.yemektarifapp.databinding.DialogYapilisEkleBinding;
 import com.grup4.yemektarifapp.databinding.DialogMalzemeEkleBinding;
+import com.grup4.yemektarifapp.utils.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -62,16 +70,41 @@ public class AddSpecificationsFragment extends Fragment {
 
         binding.editYemekAdi.setOnEditorActionListener(this::yemekAdiEkle);
 
-        binding.addphoto.setOnClickListener(v -> fetchAllRecipesFromFirestore());
+        binding.addphoto.setOnClickListener(it ->{
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent, 1);
+        });
 
         return view;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            Uri selectedImageUri = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+            Cursor cursor = requireContext().getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            ContentResolver contentResolver = getContext().getContentResolver();
+            byte[] imageBytes = ImageUtils.uriToBytes(selectedImageUri, contentResolver);
+            foodRecipe.setPhotoUrlBytes(imageBytes);
+            cursor.close();
+            // picturePath, seçilen fotoğrafın dosya yolu olarak kullanılabilir.
+        }
+    }
+
 
     private void firebaseKaydet() {
         if (!foodRecipe.isEmpty()){
         Gson gson = new Gson();
         String json = gson.toJson(foodRecipe);
         Map<String, Object> tarifMap = gson.fromJson(json, Map.class);
+        // oft bunu neden isim yaptın
         db.collection("tarifler").document(foodRecipe.getName()).set(tarifMap);
     }}
 
@@ -182,31 +215,7 @@ public class AddSpecificationsFragment extends Fragment {
                     // e.g., Log the error or show a message to the user
                 });
     }
-    private void fetchAllRecipesFromFirestore() {
 
-        db.collection("tarifler")
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                        // Loop through each document and get its data
-                        if (documentSnapshot.exists()) {
-                            FoodRecipe fetchedRecipe = documentSnapshot.toObject(FoodRecipe.class);
-
-                            if (fetchedRecipe != null) {
-                                // Perform operations with fetchedRecipe
-                                // For example, log the recipe name
-                                System.out.println(fetchedRecipe.toString());
-
-                                // Here you can perform any additional operations with the fetched recipe
-                            }
-                        }
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    // Handle failures in fetching data
-                    // e.g., Log the error or show a message to the user
-                });
-    }
 
 // kod burada kalsın  eklemek istediğimizde kullanırız
     // bu kodu kullanarak firabase  model listesi ekleyeceğiz veri ekleyebiliriz

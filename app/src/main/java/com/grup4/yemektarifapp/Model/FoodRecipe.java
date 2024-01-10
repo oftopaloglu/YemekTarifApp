@@ -19,10 +19,12 @@ public class FoodRecipe {
     @SerializedName("notes")
     private List<String> notes;
 
-    @SerializedName("photo_url")
-    private String photoUrl;
+    // "photoUrl" yerine "photoUrlBytes" ile byte dizisi olarak fotoğrafı saklayalım
+    @SerializedName("photoUrlBytes")
+    private byte[] photoUrlBytes;
+
     public FoodRecipe() {
-        // burada benzersiz id ekleme işlemi yapılmıştır
+        // benzersiz id ekleme işlemi
         this.id = UUID.randomUUID().toString();
     }
 
@@ -39,8 +41,8 @@ public class FoodRecipe {
     public List<String> getNotes() { return notes; }
     public void setNotes(List<String> notes) { this.notes = notes; }
 
-    public String getPhotoUrl() { return photoUrl; }
-    public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+    public byte[] getPhotoUrlBytes() { return photoUrlBytes; }
+    public void setPhotoUrlBytes(byte[] photoUrlBytes) { this.photoUrlBytes = photoUrlBytes; }
 
 
     public boolean isEmpty() {
@@ -55,10 +57,8 @@ public class FoodRecipe {
                 ", name='" + name + '\'' +
                 ", materials=" + materials +
                 ", notes=" + notes +
-                ", photoUrl='" + photoUrl + '\'' +
+                ", photoUrlBytes=" + photoUrlBytes +
                 '}';
     }
-}
-/* listeye add leme işlemini yazmayı unutmayın tarifler listesi ismi
 
- */
+}

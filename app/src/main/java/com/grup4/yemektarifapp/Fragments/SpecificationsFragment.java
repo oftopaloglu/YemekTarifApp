@@ -51,9 +51,15 @@ public class SpecificationsFragment extends Fragment {
                         setupRecyclerView();
                     } else {
                         // Firestore'dan veri çekme başarısız olursa buraya düşer
+                        Exception exception = task.getException();
+                        if (exception != null) {
+                            exception.printStackTrace();
+                            // Hata durumunda kullanıcıya geri bildirimde bulunabilirsiniz.
+                        }
                     }
                 });
     }
+
 
     private void setupRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
