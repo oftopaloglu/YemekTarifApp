@@ -1,112 +1,61 @@
-<!-- fragment_recipe.xml -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<!-- item_recipe.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ececec">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:layout_margin="8dp">
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/foodImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/baseline_food_bank_24"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/dishName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Yemek Adı"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:padding="16dp"/>
 
-            <TextView
-                android:id="@+id/dishName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Yemek Adı"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:padding="16dp"/>
+    <TextView
+        android:id="@+id/ingredientTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Malzemeler:"
+        android:textStyle="bold"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"/>
 
-            <!-- Malzemeler -->
-            <LinearLayout
-                android:id="@+id/ingredientsLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
+    <LinearLayout
+        android:id="@+id/ingredientsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <!-- Malzemeler buraya eklenir -->
+    </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Malzemeler:"
-                    android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/stepTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yapılış Şekli:"
+        android:textStyle="bold"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"/>
 
-                <TextView
-                    android:id="@+id/ingredient1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="- Malzeme 1"
-                    android:onClick="showPopup"/>
+    <LinearLayout
+        android:id="@+id/preparationLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <!-- Yapılış Şekli adımları buraya eklenir -->
+    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/ingredient2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="- Malzeme 2"
-                    android:onClick="showPopup"/>
-
-                <TextView
-                    android:id="@+id/ingredient3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="- Malzeme 3"
-                    android:onClick="showPopup"/>
-
-            </LinearLayout>
-
-            <!-- Yemek Fotoğrafı -->
-            <ImageView
-                android:id="@+id/foodImage"
-                android:layout_width="match_parent"
-                android:layout_height="156dp"
-                android:padding="16dp"
-                android:scaleType="fitXY"
-                tools:srcCompat="@drawable/baseline_food_bank_24" />
-
-            <!-- Yapılış Şekli -->
-            <LinearLayout
-                android:id="@+id/preparationLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Yapılış Şekli:"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/step1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="- Adım 1"
-                    android:onClick="showPopup"/>
-
-                <TextView
-                    android:id="@+id/step2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="- Adım 2"
-                    android:onClick="showPopup"/>
-
-                <TextView
-                    android:id="@+id/step3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="- Adım 3"
-                    android:onClick="showPopup"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
-</FrameLayout>
+</LinearLayout>
