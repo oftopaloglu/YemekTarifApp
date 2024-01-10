@@ -42,11 +42,19 @@ public class HomeFragment extends Fragment {
             public void onCallback(List<FoodRecipe> list) {
                 // Handle the list of FoodRecipe objects here
                 Toast.makeText(getActivity(), "Found " + list.size() + " results", Toast.LENGTH_SHORT).show();
+                // Create a new ResultsFragment with the list of FoodRecipe objects
+                ResultsFragment resultsFragment = new ResultsFragment(list);
 
+                // Replace the current fragment with the ResultsFragment
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame_layout, resultsFragment)
+                        .addToBackStack(null)
+                        .commit();
                 System.out.println("Found " + list.size() + " results");
                 for (FoodRecipe recipe : list) {
                     System.out.println(recipe.toString());
                 }
+
             }
         });
     }
