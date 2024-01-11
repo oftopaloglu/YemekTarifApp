@@ -19,6 +19,8 @@ import androidx.appcompat.widget.AppCompatButton;
 
 public class ProfileFragment extends Fragment {
 
+    private AppCompatButton favFoodsButton;
+    private AppCompatButton recipesButton;
     private AppCompatButton logoutButton;
 
     @Override
@@ -35,6 +37,7 @@ public class ProfileFragment extends Fragment {
                 replaceFragment(new HomeFragment());
             }
         });
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String userName = user.getDisplayName();
@@ -47,15 +50,36 @@ public class ProfileFragment extends Fragment {
             emailTextView.setText(userEmail);
         }
 
+        favFoodsButton = view.findViewById(R.id.favFoods);
+        recipesButton = view.findViewById(R.id.recipes);
+
+        favFoodsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Favori Yemekler butonuna tıklanınca FavoritesFragment'e geçiş yap
+                replaceFragment(new FavoritesFragment());
+            }
+        });
+
+        recipesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Yemek Tarifleri butonuna tıklanınca SpecificationsFragment'e geçiş yap
+                replaceFragment(new SpecificationsFragment());
+            }
+        });
+
         return view;
     }
 
-    // Yeni eklenen metot: Fragment değiştirme işlemi
+    // Eğer onStop metodu içinde HomeFragment'e geçiş yapmak istemiyorsanız bu metodu kaldırabilirsiniz.
+    /*
     @Override
     public void onStop() {
         super.onStop();
         replaceFragment(new HomeFragment());
     }
+    */
 
     private void replaceFragment(Fragment fragment) {
         if (getActivity() != null) {
