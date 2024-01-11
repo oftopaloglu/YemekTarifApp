@@ -21,7 +21,7 @@ public class FoodRecipe {
 
     // "photoUrl" yerine "photoUrlBytes" ile byte dizisi olarak fotoğrafı saklayalım
     @SerializedName("photoUrlBytes")
-    private byte[] photoUrlBytes;
+    private String photoUrlBytes;
 
     public FoodRecipe() {
         // benzersiz id ekleme işlemi
@@ -41,8 +41,8 @@ public class FoodRecipe {
     public List<String> getNotes() { return notes; }
     public void setNotes(List<String> notes) { this.notes = notes; }
 
-    public byte[] getPhotoUrlBytes() { return photoUrlBytes; }
-    public void setPhotoUrlBytes(byte[] photoUrlBytes) { this.photoUrlBytes = photoUrlBytes; }
+    public String getPhotoUrlBytes() { return photoUrlBytes; }
+    public void setPhotoUrlBytes(String photoUrlBytes) { this.photoUrlBytes = photoUrlBytes; }
 
 
     public boolean isEmpty() {

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.grup4.yemektarifapp.Model.FoodRecipe;
+import com.grup4.yemektarifapp.R;
 import com.grup4.yemektarifapp.databinding.ItemBinding;
 
 import java.util.List;
@@ -75,14 +76,19 @@ public class TariflerAdaptor extends RecyclerView.Adapter<TariflerAdaptor.ViewHo
             }
 
             // Yemek Fotoğrafı
-            byte[] photoUrlBytes = foodRecipe.getPhotoUrlBytes();
-            if (photoUrlBytes != null && photoUrlBytes.length > 0) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(photoUrlBytes, 0, photoUrlBytes.length);
+            String imageUrl = foodRecipe.getPhotoUrlBytes(); // URL'yi String olarak al
 
+            if (imageUrl != null && !imageUrl.isEmpty()) {
                 Glide.with(binding.getRoot().getContext())
-                        .load(bitmap)
+                        .load(imageUrl)
                         .into(binding.foodImage);
+            } else {
+                // Eğer fotoğraf URL'i boş ise, varsayılan bir resim kullanabilirsiniz
+                binding.foodImage.setImageResource(R.drawable.baseline_food_bank_24);
             }
+
+
+
 
             // Yapılış Şekli
             List<String> steps = foodRecipe.getNotes();
