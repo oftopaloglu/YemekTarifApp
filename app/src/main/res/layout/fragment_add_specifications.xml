@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:id="@+id/frame_layout">
 
-        <!-- FrameLayout içindeki diğer bileşenleri buraya ekleyebilirsin -->
 
         <ScrollView
             android:layout_width="match_parent"
