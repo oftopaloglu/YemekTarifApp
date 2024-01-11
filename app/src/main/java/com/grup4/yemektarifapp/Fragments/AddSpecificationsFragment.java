@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -38,6 +39,9 @@ import com.grup4.yemektarifapp.databinding.DialogYapilisEkleBinding;
 import com.grup4.yemektarifapp.databinding.DialogMalzemeEkleBinding;
 import com.grup4.yemektarifapp.utils.ImageUtils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
@@ -103,27 +107,56 @@ public class AddSpecificationsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE && resultCode == MainActivity.RESULT_OK && data != null && data.getData() != null) {
+        if (requestCode == PICK_IMAGE && resultCode == getActivity().RESULT_OK && data != null && data.getData() != null) {
 
             image = data.getData();
-            Glide.with(this).load(image).into(binding.selectedImage);
+
+            try {
+                InputStream inputStream = getActivity().getContentResolver().openInputStream(image);
+                int fileSize = inputStream.available();
+
+                // Convert the file size to megabytes
+                float sizeInMB = (float) fileSize / (1024 * 1024);
+
+                if (sizeInMB > 5) {
+                    Toast.makeText(getActivity(), "Dosya boyutu 5MB'den büyük olamaz.", Toast.LENGTH_SHORT).show();
+                    image = null;
+                } else {
+                    Glide.with(this).load(image).into(binding.selectedImage);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
+
     private void uploadImage(Uri file) {
-        StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
-        ref.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(getActivity(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "Failed!" + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        try {
+            Bitmap bmp = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), file);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+            byte[] data = baos.toByteArray();
+
+            StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+            ref.putBytes(data).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(getActivity(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getActivity(), "Failed!" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     private void firebaseKaydet() {
         if (!foodRecipe.isEmpty()){
