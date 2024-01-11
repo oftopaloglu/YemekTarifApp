@@ -21,9 +21,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.OnProgressListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
+import com.grup4.yemektarifapp.MainActivity;
 import com.grup4.yemektarifapp.Model.FoodRecipe;
 import com.grup4.yemektarifapp.databinding.FragmentAddSpecificationsBinding;
 import com.grup4.yemektarifapp.databinding.DialogYapilisEkleBinding;
@@ -32,13 +40,16 @@ import com.grup4.yemektarifapp.utils.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class AddSpecificationsFragment extends Fragment {
 
+    private static final int PICK_IMAGE = 1;
     private FragmentAddSpecificationsBinding binding;
     private ArrayList<String> MalzemeListesi;
     private ArrayAdapter<String> MalzemeAdapter;
@@ -46,6 +57,9 @@ public class AddSpecificationsFragment extends Fragment {
     private ArrayAdapter<String> YapilisAdapter;
     private FirebaseFirestore db;
     private FoodRecipe foodRecipe;
+    private StorageReference storageReference;
+    private Uri image;
+
 
 
     @Nullable
@@ -55,6 +69,8 @@ public class AddSpecificationsFragment extends Fragment {
         View view = binding.getRoot();
 
         db = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
+
 
         foodRecipe = new FoodRecipe();
 
@@ -70,10 +86,14 @@ public class AddSpecificationsFragment extends Fragment {
 
         binding.editYemekAdi.setOnEditorActionListener(this::yemekAdiEkle);
 
-        binding.addphoto.setOnClickListener(it ->{
-            Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setType("image/*");
-            startActivityForResult(intent, 1);
+        binding.btnAddPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
         });
 
         return view;
@@ -83,21 +103,27 @@ public class AddSpecificationsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            Uri selectedImageUri = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-            Cursor cursor = requireContext().getContentResolver().query(selectedImageUri, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            ContentResolver contentResolver = getContext().getContentResolver();
-            byte[] imageBytes = ImageUtils.uriToBytes(selectedImageUri, contentResolver);
-            foodRecipe.setPhotoUrlBytes(imageBytes);
-            cursor.close();
-            // picturePath, seçilen fotoğrafın dosya yolu olarak kullanılabilir.
+        if (requestCode == PICK_IMAGE && resultCode == MainActivity.RESULT_OK && data != null && data.getData() != null) {
+
+            image = data.getData();
+            Glide.with(this).load(image).into(binding.selectedImage);
         }
     }
 
+    private void uploadImage(Uri file) {
+        StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+        ref.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getActivity(), "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Failed!" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void firebaseKaydet() {
         if (!foodRecipe.isEmpty()){
@@ -106,6 +132,7 @@ public class AddSpecificationsFragment extends Fragment {
         Map<String, Object> tarifMap = gson.fromJson(json, Map.class);
         // oft bunu neden isim yaptın
         db.collection("tarifler").document(foodRecipe.getName()).set(tarifMap);
+        uploadImage(image);
     }}
 
     
