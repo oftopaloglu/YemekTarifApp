@@ -13,6 +13,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.grup4.yemektarifapp.MainActivity;
 import com.grup4.yemektarifapp.R;
 import androidx.appcompat.widget.AppCompatButton;
@@ -45,7 +49,7 @@ public class ProfileFragment extends Fragment {
 
             TextView nameTextView = view.findViewById(R.id.nickName);
             TextView emailTextView = view.findViewById(R.id.email);
-
+            printUserData();
             nameTextView.setText(userName);
             emailTextView.setText(userEmail);
         }
@@ -72,14 +76,6 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    // Eğer onStop metodu içinde HomeFragment'e geçiş yapmak istemiyorsanız bu metodu kaldırabilirsiniz.
-    /*
-    @Override
-    public void onStop() {
-        super.onStop();
-        replaceFragment(new HomeFragment());
-    }
-    */
 
     private void replaceFragment(Fragment fragment) {
         if (getActivity() != null) {
@@ -90,4 +86,22 @@ public class ProfileFragment extends Fragment {
             fragmentTransaction.commit();
         }
     }
+    public void printUserData() {
+        FirebaseDatabase.getInstance().getReference("Users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // This method will be called once with the value at the specified location
+                        System.out.println(dataSnapshot.getValue());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // This method will be called if there is an error getting data
+                        System.out.println("The read failed: " + databaseError.getCode());
+                    }
+                });
+    }
+
 }
