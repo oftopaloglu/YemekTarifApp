@@ -9,9 +9,11 @@
     <ImageView
         android:id="@+id/foodImage"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
+        android:layout_height="wrap_content"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         android:src="@drawable/baseline_food_bank_24"/>
+
 
     <TextView
         android:id="@+id/dishName"
