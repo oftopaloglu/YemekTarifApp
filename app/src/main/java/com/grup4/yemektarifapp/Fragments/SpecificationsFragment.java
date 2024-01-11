@@ -46,7 +46,6 @@ public class SpecificationsFragment extends Fragment {
                             FoodRecipe foodRecipe = document.toObject(FoodRecipe.class);
                             foodRecipes.add(foodRecipe);
                         }
-
                         // RecyclerView ve Adapter'ı ayarla
                         setupRecyclerView();
                     } else {
