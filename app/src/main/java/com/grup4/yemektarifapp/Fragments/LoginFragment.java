@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 import com.grup4.yemektarifapp.R;
+import com.grup4.yemektarifapp.UserServices.UserService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -104,13 +105,14 @@ public class LoginFragment extends Fragment {
         if (task.isSuccessful()) {
             FirebaseUser user = auth.getCurrentUser();
             replaceFragment(new HomeFragment());
-            saveUserToDatabase(user);
+            //saveUserToDatabase(user);
+            UserService.saveUserToDatabase(user , database );
         } else {
             Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void saveUserToDatabase(FirebaseUser user) {
+/*    private void saveUserToDatabase(FirebaseUser user) {
         HashMap<String, Object> map = new HashMap<>();
         map.put("id", user.getUid());
         map.put("name", user.getDisplayName());
@@ -128,7 +130,7 @@ public class LoginFragment extends Fragment {
         database.getReference().child("users").child(user.getUid()).setValue(map);
     }
 
-
+*/
 
     private void replaceFragment(Fragment fragment) {
         if (getActivity() != null) {
