@@ -55,7 +55,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Oğuzhan Çelik"
-
                     android:layout_marginTop="16dp"
                     android:textSize="25sp"
                     android:textStyle="bold"
@@ -69,8 +68,6 @@
                     android:layout_height="wrap_content"
                     android:text="Oguzhan.celik92@erzurum.edu.tr"
                     android:textSize="20sp"
-
-
                     android:textStyle="italic"
                     app:layout_constraintEnd_toEndOf="@+id/nickName"
                     app:layout_constraintStart_toStartOf="@+id/nickName"
@@ -79,17 +76,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="48dp"
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/email">
 
                     <androidx.appcompat.widget.AppCompatButton
-
+                        android:id="@+id/favFoods"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginStart="32dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="20dp"
                         android:layout_marginEnd="32dp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/btn_background_1"
@@ -97,12 +96,13 @@
                         android:drawablePadding="20dp"
                         android:paddingStart="20dp"
                         android:text="Favori Yemekler"
-                        android:id="@+id/favFoods"
+                        android:textAlignment="viewStart"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textAlignment="viewStart"/>
-                    <androidx.appcompat.widget.AppCompatButton
+                        app:layout_constraintTop_toBottomOf="@+id/email" />
 
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/recipes"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginStart="32dp"
@@ -114,12 +114,13 @@
                         android:drawablePadding="20dp"
                         android:paddingStart="20dp"
                         android:text="Yemek Tarifleri"
-                        android:id="@+id/recipes"
+                        android:textAlignment="viewStart"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textAlignment="viewStart"/>
-                    <!-- Diğer bileşenlerden sonra eklenen çıkış yap butonu -->
+                        app:layout_constraintTop_toBottomOf="@+id/favFoods" />
+
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnLogoutButton"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginStart="32dp"
@@ -130,10 +131,10 @@
                         android:drawablePadding="20dp"
                         android:paddingStart="20dp"
                         android:text="Çıkış Yap"
-                        android:id="@+id/btnLogoutButton"
+                        android:textAlignment="viewStart"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textAlignment="viewStart"/>
+                        app:layout_constraintTop_toBottomOf="@+id/recipes" />
 
                 </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
