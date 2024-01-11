@@ -29,8 +29,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         firestoreFoodSearch = new FirestoreFoodSearch();
-
-
+        
         binding.btnTarifAra.setOnClickListener(this::yemekArama);
 
         return binding.getRoot();

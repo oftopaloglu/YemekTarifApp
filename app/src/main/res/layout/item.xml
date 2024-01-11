@@ -1,79 +1,97 @@
-<!-- item_recipe.xml -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#FFFFFF"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
     android:layout_margin="8dp">
 
-    <ImageView
-        android:id="@+id/foodImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
-        android:src="@drawable/baseline_food_bank_24"/>
-
-
-    <TextView
-        android:id="@+id/dishName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Yemek Adı"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:padding="16dp"/>
-
-    <TextView
-        android:id="@+id/ingredientTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Malzemeler:"
-        android:textStyle="bold"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"/>
-
     <LinearLayout
-        android:id="@+id/ingredientsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
-        <!-- Malzemeler buraya eklenir -->
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/stepTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Yapılış Şekli:"
-        android:textStyle="bold"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"/>
-
-    <LinearLayout
-        android:id="@+id/preparationLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:background="#FFFFFF"
         android:padding="16dp">
 
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            android:scaleType="centerCrop">
+
+            <ImageView
+                android:id="@+id/foodImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_food_bank_24"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:id="@+id/dishName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Yemek Adı"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/ingredientTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Malzemeler:"
+            android:textStyle="bold"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"/>
+
+        <LinearLayout
+            android:id="@+id/ingredientsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:elevation="4dp">
+            <!-- Malzemeler buraya eklenir -->
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/stepTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yapılış Şekli:"
+            android:textStyle="bold"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"/>
+
+        <LinearLayout
+            android:id="@+id/preparationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:elevation="4dp">
+            <!-- Yapılış Şekli buraya eklenir -->
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="32dp"
+            app:cardElevation="8dp"
+            android:layout_margin="8dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/heart_svg"
+                android:padding="8dp" />
+
+        </com.google.android.material.card.MaterialCardView>
+
     </LinearLayout>
-    <com.google.android.material.card.MaterialCardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="32dp"
-        app:cardElevation="8dp"
-        android:layout_margin="8dp">
 
-        <ImageView
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:src="@drawable/heart_svg"
-            android:padding="8dp" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-</LinearLayout>
+</com.google.android.material.card.MaterialCardView>
