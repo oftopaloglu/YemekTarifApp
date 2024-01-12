@@ -9,6 +9,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,7 +84,7 @@ public class AddSpecificationsFragment extends Fragment {
         binding.btnYapilis.setOnClickListener(v -> yapilisEkleDialog());
         binding.btnKaydet.setOnClickListener(v -> firebaseKaydet());
 
-        binding.editYemekAdi.setOnEditorActionListener(this::yemekAdiEkle);
+        binding.editYemekAdi.addTextChangedListener(yemekAdiEkle());
 
         binding.btnAddPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,7 +187,7 @@ public class AddSpecificationsFragment extends Fragment {
             //uploadImage(image);
         }
     }
-
+/*
     private boolean yemekAdiEkle(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             foodRecipe.setName(v.getText().toString().trim());
@@ -193,6 +195,24 @@ public class AddSpecificationsFragment extends Fragment {
             return true;
         }
         return false;
+    }
+
+ */
+    private TextWatcher yemekAdiEkle() {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                foodRecipe.setName(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        };
     }
 
     private void malzemeEkleDialog() {
