@@ -114,6 +114,7 @@ public class AddSpecificationsFragment extends Fragment {
                     Toast.makeText(getActivity(), "Dosya boyutu 5MB'den büyük olamaz.", Toast.LENGTH_SHORT).show();
                     image = null;
                 } else {
+                    uploadImage(image);
                     Glide.with(this).load(image).into(binding.selectedImage);
                     isPhotoAdded = true;
                     updateLayout(); // Bu satır eklenmiş
@@ -158,6 +159,7 @@ public class AddSpecificationsFragment extends Fragment {
                             String imageUrl = uri.toString();
                             // imageUrl değişkeni yüklenen görüntünün URL'sini içerir.
                             System.out.println(imageUrl);
+                            foodRecipe.setPhotoUrlBytes(imageUrl);
                             Toast.makeText(getActivity(), "Image Uploaded!! URL: " + imageUrl, Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -178,8 +180,9 @@ public class AddSpecificationsFragment extends Fragment {
             Gson gson = new Gson();
             String json = gson.toJson(foodRecipe);
             Map<String, Object> tarifMap = gson.fromJson(json, Map.class);
+            System.out.println("url" + foodRecipe.getPhotoUrlBytes());
             db.collection("tarifler").document(foodRecipe.getName()).set(tarifMap);
-            uploadImage(image);
+            //uploadImage(image);
         }
     }
 
