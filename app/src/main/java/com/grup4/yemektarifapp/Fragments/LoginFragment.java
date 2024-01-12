@@ -108,7 +108,7 @@ public class LoginFragment extends Fragment {
             //saveUserToDatabase(user);
             UserService.saveUserToDatabase(user , database );
         } else {
-            Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Doğrulama başarısız.", Toast.LENGTH_SHORT).show();
         }
     }
 

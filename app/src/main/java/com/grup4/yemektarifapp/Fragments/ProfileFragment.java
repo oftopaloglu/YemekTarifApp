@@ -37,7 +37,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                // Çıkış işlemi sonrasında MainActivity'ye yönlendirme işlemi
                 replaceFragment(new HomeFragment());
             }
         });
@@ -60,7 +59,6 @@ public class ProfileFragment extends Fragment {
         favFoodsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Favori Yemekler butonuna tıklanınca FavoritesFragment'e geçiş yap
                 replaceFragment(new FavoritesFragment());
             }
         });
@@ -68,7 +66,6 @@ public class ProfileFragment extends Fragment {
         recipesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Yemek Tarifleri butonuna tıklanınca SpecificationsFragment'e geçiş yap
                 replaceFragment(new SpecificationsFragment());
             }
         });
@@ -92,14 +89,12 @@ public class ProfileFragment extends Fragment {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        // This method will be called once with the value at the specified location
                         System.out.println(dataSnapshot.getValue());
                     }
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        // This method will be called if there is an error getting data
-                        System.out.println("The read failed: " + databaseError.getCode());
+                        System.out.println("Okuma başarısız: " + databaseError.getCode());
                     }
                 });
     }

@@ -72,6 +72,7 @@ public class TariflerAdaptor extends RecyclerView.Adapter<TariflerAdaptor.ViewHo
                             LinearLayout.LayoutParams.WRAP_CONTENT));
                     ingredientTextView.setText("- " + material);
                     binding.ingredientsLayout.addView(ingredientTextView);
+
                 }
             }
 
