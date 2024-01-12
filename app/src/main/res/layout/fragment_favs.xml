@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.LoginFragment"
-    android:background="#ececec">
+    android:background="#E8E6E6">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="90dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/arka_plan"
+                    android:src="@drawable/design"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
