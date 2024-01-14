@@ -92,7 +92,7 @@ public class AddSpecificationsFragment extends Fragment {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+                startActivityForResult(Intent.createChooser(intent, "Görsel Seç"), PICK_IMAGE);
             }
         });
 
@@ -119,7 +119,7 @@ public class AddSpecificationsFragment extends Fragment {
                     uploadImage(image);
                     Glide.with(this).load(image).into(binding.selectedImage);
                     isPhotoAdded = true;
-                    updateLayout(); // Bu satır eklenmiş
+                    updateLayout();
                 }
 
             } catch (Exception e) {
@@ -160,16 +160,15 @@ public class AddSpecificationsFragment extends Fragment {
                         public void onSuccess(Uri uri) {
                             String imageUrl = uri.toString();
                             // imageUrl değişkeni yüklenen görüntünün URL'sini içerir.
-                            System.out.println(imageUrl);
                             foodRecipe.setPhotoUrlBytes(imageUrl);
-                            Toast.makeText(getActivity(), "Image Uploaded!! URL: " + imageUrl, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Görsel Yüklendi!! URL: " + imageUrl, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "Failed!" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Başarısız!" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (IOException e) {
@@ -182,9 +181,7 @@ public class AddSpecificationsFragment extends Fragment {
             Gson gson = new Gson();
             String json = gson.toJson(foodRecipe);
             Map<String, Object> tarifMap = gson.fromJson(json, Map.class);
-            System.out.println("url" + foodRecipe.getPhotoUrlBytes());
             db.collection("tarifler").document(foodRecipe.getName()).set(tarifMap);
-            //uploadImage(image);
         }
     }
 /*
@@ -247,8 +244,6 @@ public class AddSpecificationsFragment extends Fragment {
             MalzemeAdapter.notifyDataSetChanged();
 
             foodRecipe.setMaterials(MalzemeListesi);
-
-            System.out.println("getMaterials " + foodRecipe.getMaterials());
         }
     }
 
@@ -285,10 +280,6 @@ public class AddSpecificationsFragment extends Fragment {
             YapilisAdapter.notifyDataSetChanged();
 
             foodRecipe.setNotes(YapilisListesi);
-
-            System.out.println("getNotes " + foodRecipe.getNotes());
         }
     }
-
-    // Diğer metodlar
 }

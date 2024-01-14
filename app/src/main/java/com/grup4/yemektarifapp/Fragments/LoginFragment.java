@@ -105,7 +105,6 @@ public class LoginFragment extends Fragment {
         if (task.isSuccessful()) {
             FirebaseUser user = auth.getCurrentUser();
             replaceFragment(new HomeFragment());
-            //saveUserToDatabase(user);
             UserService.saveUserToDatabase(user , database );
         } else {
             Toast.makeText(getActivity(), "Doğrulama başarısız.", Toast.LENGTH_SHORT).show();
